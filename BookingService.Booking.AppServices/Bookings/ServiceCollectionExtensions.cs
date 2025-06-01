@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace BookingService.Booking.AppServices.Bookings
 {
-    internal static class ServiceCollectionExtensions
+    public static class ServiceCollectionExtensions
     {
-        static void AddAppServices(this IServiceCollection services)
+        public static void AddAppServices(this IServiceCollection services)
         {
             services.AddScoped<IBookingsService, BookingService>();
             services.AddScoped<IBookingsQueries, BookingQueries>();

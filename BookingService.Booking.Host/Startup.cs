@@ -1,5 +1,5 @@
 ﻿using Microsoft.OpenApi.Models;
-
+using BookingService.Booking.AppServices.Bookings;
 namespace BookingService.Booking.Host
 {
     public class Startup
@@ -22,6 +22,7 @@ namespace BookingService.Booking.Host
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Booking Service API", Version = "v1", Description = "API для сервиса бронирования" });
 
             });
+            services.AddAppServices();
         }
         // Настройка middleware
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
