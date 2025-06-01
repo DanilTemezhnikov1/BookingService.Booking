@@ -9,6 +9,10 @@ namespace BookingService.Booking.AppServices.Bookings
 {
     internal static class ServiceCollectionExtensions
     {
-        static void AddAppServices(this IServiceCollection services) { }
+        static void AddAppServices(this IServiceCollection services)
+        {
+            services.AddScoped<IBookingsService, BookingService>();
+            services.AddScoped<IBookingsQueries, BookingQueries>();
+        }
     }
 }
