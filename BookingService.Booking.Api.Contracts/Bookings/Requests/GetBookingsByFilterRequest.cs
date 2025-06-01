@@ -3,10 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static BookingService.Booking.Api.Contracts.Bookings.Dtos.BookingData;
 
 namespace BookingService.Booking.Api.Contracts.Bookings.Requests
 {
-    internal record GetBookingsByFilterRequest
-    {
-    }
+    internal record GetBookingsByFilterRequest(long Id,
+                                        BookingStatus Status,
+                                        long IdUser,
+                                        long IdBooking,
+                                        DateOnly StartBooking,
+                                        DateOnly EndBooking,
+                                        DateTimeOffset CreationBooking);
+
 }
