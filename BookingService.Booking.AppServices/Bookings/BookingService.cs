@@ -13,7 +13,6 @@ namespace BookingService.Booking.AppServices.Bookings
         {
             throw new NotImplementedException();
         }
-
         public BookingData GetById(long id)
         {
             throw new NotImplementedException();
