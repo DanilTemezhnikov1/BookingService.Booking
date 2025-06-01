@@ -41,7 +41,6 @@ namespace BookingService.Booking.Host
             {
                 endpoints.MapControllers();
             });
-
             // Другие middleware...
         }
     }
