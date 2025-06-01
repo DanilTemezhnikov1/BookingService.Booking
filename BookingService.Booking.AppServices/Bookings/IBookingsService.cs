@@ -7,7 +7,7 @@ using BookingService.Booking.Api.Contracts.Bookings.Dtos;
 using static BookingService.Booking.Api.Contracts.Bookings.Dtos.BookingData;
 namespace BookingService.Booking.AppServices.Bookings
 {
-    internal interface IBookingsService
+    public interface IBookingsService
     {
         long Create(long Id,
                     BookingStatus Status,

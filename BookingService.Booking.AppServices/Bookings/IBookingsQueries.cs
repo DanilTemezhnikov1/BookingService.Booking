@@ -7,7 +7,7 @@ using BookingService.Booking.Api.Contracts.Bookings.Dtos;
 using static BookingService.Booking.Api.Contracts.Bookings.Dtos.BookingData;
 namespace BookingService.Booking.AppServices.Bookings
 {
-    internal interface IBookingsQueries
+    public interface IBookingsQueries
     {
         BookingData[] GetByFilter();
         BookingStatus GetStatusById();
