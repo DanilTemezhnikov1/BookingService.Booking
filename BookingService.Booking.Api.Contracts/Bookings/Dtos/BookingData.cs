@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BookingService.Booking.Api.Contracts.Bookings.Dtos
 {
-    internal class BookingData
+    public class BookingData
     {
         public enum BookingStatus
         {
