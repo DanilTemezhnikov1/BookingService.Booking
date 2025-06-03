@@ -1,5 +1,9 @@
 ﻿using Microsoft.OpenApi.Models;
 using BookingService.Booking.AppServices.Bookings;
+using BookingService.Booking.AppServices.Exceptions;
+using Hellang.Middleware.ProblemDetails;
+using Microsoft.AspNetCore.Mvc;
+using BookingService.Booking.Domain.Exceptions;
 namespace BookingService.Booking.Host
 {
     public class Startup
@@ -23,6 +27,28 @@ namespace BookingService.Booking.Host
 
             });
             services.AddAppServices();
+            services.AddProblemDetails(options =>
+            {
+                // Если окружение Development, включаем подробное описание ошибки в ответ.
+                options.IncludeExceptionDetails = (context, _) =>
+                {
+                    var env = context.RequestServices.GetRequiredService<IWebHostEnvironment>();
+                    return env.IsDevelopment();
+                };
+                options.Map<DomainException>(ex => new ProblemDetails
+                {
+                    Status = 402,
+                    Type = $"https://httpstatuses.com/{402}",
+                    Title = ex.Message,
+                    Detail = ex.StackTrace
+                });
+                options.Map<ValidationException>(ex => new ProblemDetails
+                {
+                    Status = 400,
+                    Type = $"https://httpstatuses.com/{400}",
+                    Title = ex.Message,
+                });
+            });
         }
         // Настройка middleware
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -42,7 +68,8 @@ namespace BookingService.Booking.Host
             {
                 endpoints.MapControllers();
             });
-            // Другие middleware...
+            app.UseProblemDetails();
+
         }
     }
 }

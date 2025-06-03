@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BookingService.Booking.AppServices.Exceptions
 {
-    internal class ValidationException : Exception
+    public class ValidationException : Exception
     {
         public ValidationException(string message) : base(message) { }
     }
