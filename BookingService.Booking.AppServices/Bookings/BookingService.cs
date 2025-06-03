@@ -1,4 +1,5 @@
-﻿
+﻿using BookingService.Booking.Domain.Exceptions;
+using BookingService.Booking.AppServices.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace BookingService.Booking.AppServices.Bookings
     {
         public long Create(long? IdUser, long? IdBooking, DateOnly? StartBooking, DateOnly? EndBooking)
         {
-            throw new NotImplementedException();
+            throw new ValidationException();
         }
         public BookingData GetById(long? id)
         {
@@ -19,7 +20,7 @@ namespace BookingService.Booking.AppServices.Bookings
         }
         public void Cancel(long? id)
         {
-            throw new NotImplementedException();
+            throw new DomainException();
         }
     }
 }
