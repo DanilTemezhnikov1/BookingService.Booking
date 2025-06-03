@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BookingService.Booking.Api.Contracts.Bookings.Dtos
+namespace BookingService.Booking.AppServices.Bookings
 {
     public class BookingData
     {

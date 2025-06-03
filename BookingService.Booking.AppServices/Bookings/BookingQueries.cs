@@ -1,4 +1,4 @@
-﻿using BookingService.Booking.Api.Contracts.Bookings.Dtos;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,12 +9,12 @@ namespace BookingService.Booking.AppServices.Bookings
 {
     internal class BookingQueries : IBookingsQueries
     {
-        public BookingData[] GetByFilter()
+        public BookingData[] GetByFilter(BookingData.BookingStatus? status, long? idUser, long? idBooking, DateOnly? startBooking, DateOnly? endBooking)
         {
             throw new NotImplementedException();
         }
 
-        public BookingData.BookingStatus GetStatusById()
+        public BookingData.BookingStatus GetStatusById(long? id)
         {
             throw new NotImplementedException();
         }

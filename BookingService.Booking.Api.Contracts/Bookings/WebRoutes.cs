@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BookingService.Booking.Api.Contracts.Bookings
 {
-    internal static class WebRoutes
+    public static class WebRoutes
     {
         public const string BasePath = "api / bookings";
         public const string Create = BasePath + "/create";

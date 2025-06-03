@@ -1,4 +1,4 @@
-﻿using BookingService.Booking.Api.Contracts.Bookings.Dtos;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,15 +9,15 @@ namespace BookingService.Booking.AppServices.Bookings
 {
     internal class BookingService : IBookingsService
     {
-        public long Create(long Id, BookingData.BookingStatus Status, long IdUser, long IdBooking, DateOnly StartBooking, DateOnly EndBooking, DateTimeOffset CreationBooking)
+        public long Create(long? IdUser, long? IdBooking, DateOnly? StartBooking, DateOnly? EndBooking)
         {
             throw new NotImplementedException();
         }
-        public BookingData GetById(long id)
+        public BookingData GetById(long? id)
         {
             throw new NotImplementedException();
         }
-        public void Cancel(long id)
+        public void Cancel(long? id)
         {
             throw new NotImplementedException();
         }

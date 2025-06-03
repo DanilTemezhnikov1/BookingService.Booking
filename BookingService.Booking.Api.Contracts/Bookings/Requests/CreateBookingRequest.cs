@@ -3,15 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static BookingService.Booking.Api.Contracts.Bookings.Dtos.BookingData;
+using static BookingService.Booking.Api.Contracts.Bookings.Dtos.BookingDataResponse;
 
 namespace BookingService.Booking.Api.Contracts.Bookings.Requests
 {
-    internal record CreateBookingRequest(long Id, 
-                                        BookingStatus Status, 
-                                        long IdUser,
+    public record CreateBookingRequest(long IdUser,
                                         long IdBooking, 
                                         DateOnly StartBooking,
-                                        DateOnly EndBooking, 
-                                        DateTimeOffset CreationBooking);
+                                        DateOnly EndBooking);
 }                    
