@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BookingService.Booking.Host.Controllers
 {
-    [Route("api/[controller]")]
+  //  [Route(WebRoutes.BasePath)]
     [ApiController]
     public class BookingsController : ControllerBase
     {
