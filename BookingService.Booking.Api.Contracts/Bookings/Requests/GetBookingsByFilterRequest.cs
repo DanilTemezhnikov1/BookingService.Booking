@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static BookingService.Booking.Api.Contracts.Bookings.Dtos.BookingDataResponse;
+using BookingService.Booking.Domain.Contracts;
 
 namespace BookingService.Booking.Api.Contracts.Bookings.Requests
 {

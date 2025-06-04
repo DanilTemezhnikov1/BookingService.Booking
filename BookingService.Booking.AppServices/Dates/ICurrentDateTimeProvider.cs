@@ -12,4 +12,4 @@ namespace BookingService.Booking.AppServices.Dates
         public DateTimeOffset UtcNow { get; }
     }
 }
-}
+

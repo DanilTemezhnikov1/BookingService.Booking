@@ -3,18 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BookingService.Booking.Domain.Contracts;
 
 namespace BookingService.Booking.Api.Contracts.Bookings.Dtos
 {
     public class BookingDataResponse
     {
-        public enum BookingStatus
-        {
-            AwaitsConfirmation,
-            Confirmed,
-            Cancelled
-        }
-
+ 
         public long Id;
         public BookingStatus Status;
         public long IdUser;
