@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using BookingService.Booking.AppServices.Dates;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace BookingService.Booking.AppServices.Bookings
         {
             services.AddScoped<IBookingsService, BookingService>();
             services.AddScoped<IBookingsQueries, BookingQueries>();
+            services.AddSingleton<ICurrentDateTimeProvider, DefaultCurrentDateTimeProvider>();
         }
     }
 }
