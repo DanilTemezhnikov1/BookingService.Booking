@@ -4,7 +4,7 @@ namespace BookingService.Booking.Host.Converter
 {
     public static class StringExtension
     {
-        public static BookingStatus ToEnum(this string value) =>
+        public static BookingStatus ToBookingStatus(this string value) =>
                value switch
                {
                    "AwaitsConfirmation" => BookingStatus.AwaitsConfirmation,
