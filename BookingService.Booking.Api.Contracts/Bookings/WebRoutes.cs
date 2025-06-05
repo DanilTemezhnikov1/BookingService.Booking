@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BookingService.Booking.Api.Contracts.Bookings
+﻿namespace BookingService.Booking.Api.Contracts.Bookings
 {
     public static class WebRoutes
     {
@@ -13,6 +7,6 @@ namespace BookingService.Booking.Api.Contracts.Bookings
         public const string GetById = BasePath + "/{id}";
         public const string Cancel = BasePath + "/{id}/cancel";
         public const string GetByFilter = BasePath + "/by-filter";
-        public const string GetStatusById = BasePath + "{id}/status";
+        public const string GetStatusById = BasePath + "/{id}/status";
     }
 }

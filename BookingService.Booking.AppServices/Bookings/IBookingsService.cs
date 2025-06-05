@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BookingService.Booking.AppServices.Queries;
 namespace BookingService.Booking.AppServices.Bookings
 {
     public interface IBookingsService
     {
-        long Create(long? IdUser,long? IdBooking, DateOnly? StartBooking, DateOnly? EndBooking);
-        BookingData GetById(long? id);
-        void Cancel(long? id);
+        Task<long> Create(CreateBookingQuery createBooking);
+        Task<BookingData> GetById(long? id);
+        Task Cancel(long? id);
     }
 }
