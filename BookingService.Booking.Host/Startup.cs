@@ -1,9 +1,9 @@
-﻿using Microsoft.OpenApi.Models;
-using BookingService.Booking.AppServices.Bookings;
+﻿using BookingService.Booking.AppServices.Bookings;
 using BookingService.Booking.AppServices.Exceptions;
+using BookingService.Booking.Domain.Exceptions;
 using Hellang.Middleware.ProblemDetails;
 using Microsoft.AspNetCore.Mvc;
-using BookingService.Booking.Domain.Exceptions;
+using Microsoft.OpenApi.Models;
 namespace BookingService.Booking.Host
 {
     public class Startup
@@ -22,7 +22,8 @@ namespace BookingService.Booking.Host
             services.AddControllers();
 
             // Добавление Swagger
-            services.AddSwaggerGen(c => {
+            services.AddSwaggerGen(c =>
+            {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Booking Service API", Version = "v1", Description = "API для сервиса бронирования" });
 
             });
