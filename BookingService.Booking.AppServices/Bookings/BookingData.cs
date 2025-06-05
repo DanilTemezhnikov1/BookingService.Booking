@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BookingService.Booking.AppServices.Bookings
+﻿namespace BookingService.Booking.AppServices.Bookings
 {
+    public enum BookingStatus
+    {
+        AwaitsConfirmation,
+        Confirmed,
+        Cancelled
+    }
     public class BookingData
     {
-        public enum BookingStatus
-        {
-            AwaitsConfirmation,
-            Confirmed,
-            Cancelled
-        }
+
 
         public long Id;
         public BookingStatus Status;

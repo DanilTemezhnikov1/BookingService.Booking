@@ -1,20 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BookingService.Booking.Api.Contracts.Bookings.Dtos
+﻿namespace BookingService.Booking.Api.Contracts.Bookings.Dtos
 {
+    public enum BookingStatus
+    {
+        AwaitsConfirmation,
+        Confirmed,
+        Cancelled
+    }
     public class BookingDataResponse
     {
-        public enum BookingStatus
-        {
-            AwaitsConfirmation,
-            Confirmed,
-            Cancelled
-        }
-
         public long Id;
         public BookingStatus Status;
         public long IdUser;
