@@ -26,7 +26,6 @@ namespace BookingService.Booking.Domain.UnitTests
             Assert.Equal(startBooking, bookingAggregate.StartBooking);
             Assert.Equal(endBooking, bookingAggregate.EndBooking);
             Assert.Equal(creationBooking, bookingAggregate.CreationBooking);
-
         }
         [Fact]
         public void Ctor_id_user_less_than_or_equal_to_zero_throws_AE()
@@ -45,7 +44,6 @@ namespace BookingService.Booking.Domain.UnitTests
 
 
             Assert.Throws<ArgumentException>(() => BookingAggregate.Initialize(idUser, idBooking, new DateOnly(), new DateOnly(), new DateTimeOffset()));
-
         }
         [Fact]
         public void Ctor_start_booking_less_than_or_equal_to_creation_booking_throws_AE()
@@ -56,7 +54,6 @@ namespace BookingService.Booking.Domain.UnitTests
 
 
             Assert.Throws<ArgumentException>(() => BookingAggregate.Initialize(long.MaxValue, long.MaxValue, startBooking, new DateOnly(), creationBooking));
-
         }
         [Fact]
         public void Ctor_end_booking_less_than_or_equal_to_start_booking_throws_AE()
@@ -66,7 +63,6 @@ namespace BookingService.Booking.Domain.UnitTests
 
 
             Assert.Throws<ArgumentException>(() => BookingAggregate.Initialize(long.MaxValue, long.MaxValue, startBooking, endBooking, new DateTimeOffset()));
-
         }
         [Fact]
         public void Confirm_status_awaits_confirmation()
