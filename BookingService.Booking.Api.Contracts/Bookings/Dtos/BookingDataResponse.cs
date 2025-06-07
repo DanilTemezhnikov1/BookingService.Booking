@@ -1,4 +1,4 @@
-﻿using BookingService.Booking.Domain.Contracts;
+﻿using BookingService.Booking.Domain.Contracts.Bookings;
 
 namespace BookingService.Booking.Api.Contracts.Bookings.Dtos
 {

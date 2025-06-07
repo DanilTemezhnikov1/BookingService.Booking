@@ -1,10 +1,10 @@
 ﻿using BookingService.Booking.Domain.Bookings;
-using BookingService.Booking.Domain.Contracts;
 using BookingService.Booking.AppServices.Dates;
+using BookingService.Booking.Domain.Contracts.Bookings;
 
 namespace BookingService.Booking.Domain.UnitTests
 {
-    
+
     public class BookingAggregateTests
     {
         [Fact]
