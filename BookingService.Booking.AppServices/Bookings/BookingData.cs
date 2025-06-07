@@ -8,8 +8,6 @@
     }
     public class BookingData
     {
-
-
         public long Id;
         public BookingStatus Status;
         public long IdUser;
