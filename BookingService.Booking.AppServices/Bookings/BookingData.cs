@@ -1,15 +1,10 @@
-﻿namespace BookingService.Booking.AppServices.Bookings
+﻿using BookingService.Booking.Domain.Contracts;
+
+namespace BookingService.Booking.AppServices.Bookings
 {
-    public enum BookingStatus
-    {
-        AwaitsConfirmation,
-        Confirmed,
-        Cancelled
-    }
+
     public class BookingData
     {
-
-
         public long Id;
         public BookingStatus Status;
         public long IdUser;

@@ -1,4 +1,4 @@
-﻿using BookingService.Booking.AppServices.Bookings;
+﻿using BookingService.Booking.Domain.Contracts;
 
 namespace BookingService.Booking.AppServices.Queries
 {
