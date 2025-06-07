@@ -12,19 +12,22 @@ namespace BookingService.Booking.Domain.Bookings
         public DateOnly EndBooking { get; set; }
         public DateTimeOffset CreationBooking {  get; set; }
         
-        private BookingAggregate(long idUser, long idBooking, DateOnly startBooking, DateOnly endBooking)
+        public BookingAggregate() { }
+        private BookingAggregate(long idUser, long idBooking, DateOnly startBooking, DateOnly endBooking, DateTimeOffset creationBooking)
         {
             Status = BookingStatus.AwaitsConfirmation;
             IdUser = idUser;
             IdBooking = idBooking;
             StartBooking = startBooking;
             EndBooking = endBooking;
+            CreationBooking = creationBooking;
         }
-        public static BookingAggregate Initialize(long idUser, long idBooking, DateOnly startBooking, DateOnly endBooking)
+        public static BookingAggregate Initialize(long idUser, long idBooking, DateOnly startBooking, DateOnly endBooking, DateTimeOffset creationBooking)
         {
             if (idUser <= 0 || idBooking <=0) throw new ArgumentException("Id должен быть больше нуля");
+            if (startBooking.CompareTo(DateOnly.FromDateTime(creationBooking.DateTime)) <= 0) throw new ArgumentException("Начало бронирования должно быть после текущей даты");
             if (endBooking.CompareTo(startBooking) <= 0) throw new ArgumentException("Окончание бронирования должно быть после начала бронирования");
-            return new BookingAggregate(idUser, idBooking, startBooking, endBooking);
+            return new BookingAggregate(idUser, idBooking, startBooking, endBooking, creationBooking);
         }
         public void Confirm ()
         {

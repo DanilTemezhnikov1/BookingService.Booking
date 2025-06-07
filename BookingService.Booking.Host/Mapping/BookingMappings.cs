@@ -1,5 +1,5 @@
 ﻿using BookingService.Booking.Api.Contracts.Bookings.Requests;
-using BookingService.Booking.AppServices.Bookings;
+using BookingService.Booking.Domain.Contracts;
 using BookingService.Booking.AppServices.Queries;
 
 namespace BookingService.Booking.Host.Mapping
@@ -20,7 +20,7 @@ namespace BookingService.Booking.Host.Mapping
                 Id = request.Id,
                 IdUser = request.IdUser,
                 IdBooking = request.IdBooking,
-                Status = (BookingStatus)request.Status,
+                Status = request.Status,
                 CreationBooking = request.CreationBooking,
                 StartBooking = request.StartBooking,
                 EndBooking = request.EndBooking
