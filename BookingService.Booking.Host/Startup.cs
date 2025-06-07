@@ -1,5 +1,9 @@
-﻿using Microsoft.OpenApi.Models;
-
+﻿using BookingService.Booking.AppServices.Bookings;
+using BookingService.Booking.AppServices.Exceptions;
+using BookingService.Booking.Domain.Exceptions;
+using Hellang.Middleware.ProblemDetails;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.OpenApi.Models;
 namespace BookingService.Booking.Host
 {
     public class Startup
@@ -18,9 +22,33 @@ namespace BookingService.Booking.Host
             services.AddControllers();
 
             // Добавление Swagger
-            services.AddSwaggerGen(c => {
+            services.AddSwaggerGen(c =>
+            {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Booking Service API", Version = "v1", Description = "API для сервиса бронирования" });
 
+            });
+            services.AddAppServices();
+            services.AddProblemDetails(options =>
+            {
+                // Если окружение Development, включаем подробное описание ошибки в ответ.
+                options.IncludeExceptionDetails = (context, _) =>
+                {
+                    var env = context.RequestServices.GetRequiredService<IWebHostEnvironment>();
+                    return env.IsDevelopment();
+                };
+                options.Map<DomainException>(ex => new ProblemDetails
+                {
+                    Status = 402,
+                    Type = $"https://httpstatuses.com/{402}",
+                    Title = ex.Message,
+                    Detail = ex.StackTrace
+                });
+                options.Map<ValidationException>(ex => new ProblemDetails
+                {
+                    Status = 400,
+                    Type = $"https://httpstatuses.com/{400}",
+                    Title = ex.Message,
+                });
             });
         }
         // Настройка middleware
@@ -41,7 +69,8 @@ namespace BookingService.Booking.Host
             {
                 endpoints.MapControllers();
             });
-            // Другие middleware...
+            app.UseProblemDetails();
+
         }
     }
 }

@@ -3,10 +3,10 @@ namespace BookingService.Booking.Host
 {
     public static class HostBuilderFactory
     {
-      
+
         public static IHost BuildHost(string[] args)
         {
-           
+
             return Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
