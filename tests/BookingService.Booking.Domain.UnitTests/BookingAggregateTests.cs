@@ -1,6 +1,6 @@
 ﻿using BookingService.Booking.Domain.Bookings;
-using BookingService.Booking.AppServices.Dates;
 using BookingService.Booking.Domain.Contracts.Bookings;
+using BookingService.Booking.Domain.Exceptions;
 
 namespace BookingService.Booking.Domain.UnitTests
 {
@@ -10,15 +10,14 @@ namespace BookingService.Booking.Domain.UnitTests
         [Fact]
         public void Ctor_valid_all_arguments_creates_with_correct_ids_and_dates()
         {
-            DefaultCurrentDateTimeProvider _currentDateTimeProvider = new DefaultCurrentDateTimeProvider();
             long idUser = 5;
             long idBooking = 5;
-            DateOnly startBooking = new DateOnly(2026,3,5);
-            DateOnly endBooking = new DateOnly(2026,4,5);
-            DateTimeOffset creationBooking = _currentDateTimeProvider.Now;
+            DateOnly startBooking = new DateOnly(2026, 3, 5);
+            DateOnly endBooking = new DateOnly(2026, 4, 5);
+            DateTimeOffset creationBooking = new DateTimeOffset(new DateTime(2025, 2, 1));
 
 
-           var bookingAggregate = BookingAggregate.Initialize(idUser, idBooking, startBooking, endBooking, creationBooking);
+            var bookingAggregate = BookingAggregate.Initialize(idUser, idBooking, startBooking, endBooking, creationBooking);
 
 
             Assert.Equal(idUser, bookingAggregate.IdUser);
@@ -28,13 +27,13 @@ namespace BookingService.Booking.Domain.UnitTests
             Assert.Equal(creationBooking, bookingAggregate.CreationBooking);
         }
         [Fact]
-        public void Ctor_id_user_less_than_or_equal_to_zero_throws_AE()
+        public void Ctor_id_user_less_than_or_equal_to_zero_throws_DE()
         {
             long idUser = 0;
             long idBooking = 14;
 
 
-            Assert.Throws<ArgumentException>(() => BookingAggregate.Initialize(idUser, idBooking, new DateOnly(), new DateOnly(), new DateTimeOffset()));
+            Assert.Throws<DomainException>(() => BookingAggregate.Initialize(idUser, idBooking, new DateOnly(), new DateOnly(), new DateTimeOffset()));
         }
         [Fact]
         public void Ctor_id_booking_less_than_or_equal_to_zero_throws_AE()
@@ -43,32 +42,31 @@ namespace BookingService.Booking.Domain.UnitTests
             long idBooking = -92;
 
 
-            Assert.Throws<ArgumentException>(() => BookingAggregate.Initialize(idUser, idBooking, new DateOnly(), new DateOnly(), new DateTimeOffset()));
+            Assert.Throws<DomainException>(() => BookingAggregate.Initialize(idUser, idBooking, new DateOnly(), new DateOnly(), new DateTimeOffset()));
         }
         [Fact]
-        public void Ctor_start_booking_less_than_or_equal_to_creation_booking_throws_AE()
+        public void Ctor_start_booking_less_than_or_equal_to_creation_booking_throws_DE()
         {
-            DefaultCurrentDateTimeProvider _currentDateTimeProvider = new DefaultCurrentDateTimeProvider();
-            DateOnly startBooking = new DateOnly(2004,6,30);
-            DateTimeOffset creationBooking = _currentDateTimeProvider.Now;
+            DateOnly startBooking = new DateOnly(2004, 6, 30);
+            DateTimeOffset creationBooking = new DateTimeOffset(new DateTime(2025, 2, 1));
 
 
-            Assert.Throws<ArgumentException>(() => BookingAggregate.Initialize(long.MaxValue, long.MaxValue, startBooking, new DateOnly(), creationBooking));
+            Assert.Throws<DomainException>(() => BookingAggregate.Initialize(long.MaxValue, long.MaxValue, startBooking, new DateOnly(), creationBooking));
         }
         [Fact]
-        public void Ctor_end_booking_less_than_or_equal_to_start_booking_throws_AE()
+        public void Ctor_end_booking_less_than_or_equal_to_start_booking_throws_DE()
         {
-            DateOnly startBooking = new DateOnly(2025,12,12);
+            DateOnly startBooking = new DateOnly(2025, 12, 12);
             DateOnly endBooking = new DateOnly(2004, 6, 30);
 
 
-            Assert.Throws<ArgumentException>(() => BookingAggregate.Initialize(long.MaxValue, long.MaxValue, startBooking, endBooking, new DateTimeOffset()));
+            Assert.Throws<DomainException>(() => BookingAggregate.Initialize(long.MaxValue, long.MaxValue, startBooking, endBooking, new DateTimeOffset()));
         }
         [Fact]
         public void Confirm_status_awaits_confirmation()
         {
-            BookingAggregate bookingAggregate = new BookingAggregate();
-            bookingAggregate.Status = BookingStatus.AwaitsConfirmation;
+            //после инициализации статус будет AwaitsConfirmation
+            BookingAggregate bookingAggregate = BookingAggregate.Initialize(long.MaxValue, long.MaxValue, new DateOnly(2002, 2, 2), new DateOnly(2003, 3, 3), new DateTimeOffset(new DateTime(2001, 1, 1)));
 
 
             bookingAggregate.Confirm();
@@ -77,20 +75,20 @@ namespace BookingService.Booking.Domain.UnitTests
             Assert.Equal(BookingStatus.Confirmed, bookingAggregate.Status);
         }
         [Fact]
-        public void Confirm_status_confirmed_throws_IOE()
+        public void Confirm_status_confirmed_throws_DE()
         {
-            BookingAggregate bookingAggregate = new BookingAggregate();
-            bookingAggregate.Status = BookingStatus.Confirmed;
+            BookingAggregate bookingAggregate = BookingAggregate.Initialize(long.MaxValue, long.MaxValue, new DateOnly(2002, 2, 2), new DateOnly(2003, 3, 3), new DateTimeOffset(new DateTime(2001, 1, 1)));
+            bookingAggregate.Confirm();
 
 
-            Assert.Throws<InvalidOperationException>(() => bookingAggregate.Confirm());
+            Assert.Throws<DomainException>(() => bookingAggregate.Confirm());
         }
-        
+
         [Fact]
         public void Cancel_status_confirmed()
         {
-            BookingAggregate bookingAggregate = new BookingAggregate();
-            bookingAggregate.Status = BookingStatus.Confirmed;
+            BookingAggregate bookingAggregate = BookingAggregate.Initialize(long.MaxValue, long.MaxValue, new DateOnly(2002, 2, 2), new DateOnly(2003, 3, 3), new DateTimeOffset(new DateTime(2001, 1, 1)));
+            bookingAggregate.Confirm();
 
 
             bookingAggregate.Cancel();
@@ -99,13 +97,13 @@ namespace BookingService.Booking.Domain.UnitTests
             Assert.Equal(BookingStatus.Cancelled, bookingAggregate.Status);
         }
         [Fact]
-        public void Cancel_status_cancelled_throws_IOE()
+        public void Cancel_status_cancelled_throws_DE()
         {
-            BookingAggregate bookingAggregate = new BookingAggregate();
-            bookingAggregate.Status = BookingStatus.Cancelled;
+            BookingAggregate bookingAggregate = BookingAggregate.Initialize(long.MaxValue, long.MaxValue, new DateOnly(2002, 2, 2), new DateOnly(2003, 3, 3), new DateTimeOffset(new DateTime(2001, 1, 1)));
+            bookingAggregate.Cancel();
 
 
-            Assert.Throws<InvalidOperationException>(() => bookingAggregate.Cancel());
+            Assert.Throws<DomainException>(() => bookingAggregate.Cancel());
         }
     }
 }

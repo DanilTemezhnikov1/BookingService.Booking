@@ -1,5 +1,4 @@
 ﻿using BookingService.Booking.Api.Contracts.Bookings.Requests;
-using BookingService.Booking.Domain.Contracts;
 using BookingService.Booking.AppServices.Queries;
 
 namespace BookingService.Booking.Host.Mapping
