@@ -41,7 +41,7 @@ services:
       POSTGRES_PASSWORD: "admin_catalog"
       PGDATA: /data/postgres
     healthcheck:
-      test: /usr/bin/pg_isready
+      test: ["CMD-SHELL", "pg_isready -U catalog_admin -d booking_service_catalog"]
       interval: 5s
       timeout: 10s
       retries: 5
@@ -66,4 +66,25 @@ services:
     build:
       context: .
       dockerfile: src/BookingService.Catalog.Host/Dockerfile
-     
+    depends_on:
+      booking-service_bookings-db:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+
+  booking-service_bookings-db:
+    image: postgres:latest    
+    container_name: bookings-db
+    ports:
+      - 5433:5432
+    environment:
+      POSTGRES_DB: booking_service_bookings
+      POSTGRES_USER: bookings_admin
+      POSTGRES_PASSWORD: admin_bookings
+      PGDATA: /data/postgres/
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U catalog_admin -d booking_service_catalog"]
+      interval: 5s
+      timeout: 10s
+      retries: 5
+   
