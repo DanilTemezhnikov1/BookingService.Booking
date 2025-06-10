@@ -1,11 +1,7 @@
-﻿namespace BookingService.Booking.Api.Contracts.Bookings.Dtos
+﻿using BookingService.Booking.Domain.Contracts.Bookings;
+
+namespace BookingService.Booking.Api.Contracts.Bookings.Dtos
 {
-    public enum BookingStatus
-    {
-        AwaitsConfirmation,
-        Confirmed,
-        Cancelled
-    }
     public class BookingDataResponse
     {
         public long Id;

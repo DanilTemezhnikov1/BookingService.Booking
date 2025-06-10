@@ -3,5 +3,6 @@
     public class ValidationException : Exception
     {
         public ValidationException() { }
+        public ValidationException(string str) : base(str) { }
     }
 }
