@@ -22,7 +22,6 @@ namespace BookingService.Booking.Host.Controllers
         [Route(WebRoutes.Create)]
         public async Task<long> CreateBooking([FromBody] CreateBookingRequest createBookingRequest)
         {
-
             return await _bookingsService.Create(createBookingRequest.ToQuery());
         }
 
