@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +9,24 @@ using System.Threading.Tasks;
 
 namespace BookingService.Booking.Persistence
 {
-    public class DesignTimeDbContextFactory
+    public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<BookingsContext>
     {
+        public BookingsContext CreateDbContext(string[] args)
+        {
+            var optionsBuilder = new DbContextOptionsBuilder<BookingsContext>();
+
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .Build();
+
+            var connectionString = configuration.GetConnectionString(nameof(BookingsContext));
+            if (string.IsNullOrWhiteSpace(connectionString))
+                throw new InvalidOperationException($"ConnectionString for `{nameof(BookingsContext)}` not found");
+
+            optionsBuilder.UseNpgsql(connectionString);
+
+            return new BookingsContext(optionsBuilder.Options);
+        }
     }
 }
