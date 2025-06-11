@@ -5,16 +5,6 @@ VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{85076737-0445-4D5F-B4B3-A8CBF62AAC4B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookingService.Booking.Host", "BookingService.Booking.Host\BookingService.Booking.Host.csproj", "{8E21B661-CF36-4DFF-A0C2-4298C60DDA06}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookingService.Booking.Api.Contracts", "BookingService.Booking.Api.Contracts\BookingService.Booking.Api.Contracts.csproj", "{6364CF5D-EC9E-439D-B908-68FB07E7ABAA}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookingService.Booking.AppServices", "BookingService.Booking.AppServices\BookingService.Booking.AppServices.csproj", "{9BFE2510-8392-473C-8E8B-3BAD63A9C57B}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookingService.Booking.Domain", "BookingService.Booking.Domain\BookingService.Booking.Domain.csproj", "{5BDB13CB-33F7-4FE4-9C30-49E4108DA2E6}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookingService.Booking.Domain.Contracts", "BookingService.Booking.Domain.Contracts\BookingService.Booking.Domain.Contracts.csproj", "{6BFD8D62-6587-45E0-8DB3-93564D9BF12B}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{BE399B94-2005-45B8-89E2-E46C476A2F93}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Tests", "_Tests", "{B9F3DB1B-C788-409A-8703-A44BE8F6594D}"
@@ -25,32 +15,22 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookingService.Booking.Pers
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookingService.Booking.AppServices.Contracts", "src\BookingService.Booking.AppServices.Contracts\BookingService.Booking.AppServices.Contracts.csproj", "{3F33CC33-A03C-4940-A743-88488BDB5F3E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookingService.Booking.Host", "src\BookingService.Booking.Host\BookingService.Booking.Host.csproj", "{B1C390DD-89AC-4584-8D05-EBB829DB5868}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookingService.Booking.Domain.Contracts", "src\BookingService.Booking.Domain.Contracts\BookingService.Booking.Domain.Contracts.csproj", "{1207FFA6-D7F1-4570-BE06-2BA4D77DEB5E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookingService.Booking.Domain", "src\BookingService.Booking.Domain\BookingService.Booking.Domain.csproj", "{3A0FDDF1-5D49-4F6A-AAFF-2A0BBBC35BFA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookingService.Booking.AppServices", "src\BookingService.Booking.AppServices\BookingService.Booking.AppServices.csproj", "{33A23EC5-0056-44FE-9A31-115361FFA9F2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookingService.Booking.Api.Contracts", "src\BookingService.Booking.Api.Contracts\BookingService.Booking.Api.Contracts.csproj", "{522DC371-DD14-4706-97F8-2825EEA9279D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{8E21B661-CF36-4DFF-A0C2-4298C60DDA06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8E21B661-CF36-4DFF-A0C2-4298C60DDA06}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8E21B661-CF36-4DFF-A0C2-4298C60DDA06}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8E21B661-CF36-4DFF-A0C2-4298C60DDA06}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6364CF5D-EC9E-439D-B908-68FB07E7ABAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6364CF5D-EC9E-439D-B908-68FB07E7ABAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6364CF5D-EC9E-439D-B908-68FB07E7ABAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6364CF5D-EC9E-439D-B908-68FB07E7ABAA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9BFE2510-8392-473C-8E8B-3BAD63A9C57B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9BFE2510-8392-473C-8E8B-3BAD63A9C57B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9BFE2510-8392-473C-8E8B-3BAD63A9C57B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9BFE2510-8392-473C-8E8B-3BAD63A9C57B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5BDB13CB-33F7-4FE4-9C30-49E4108DA2E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5BDB13CB-33F7-4FE4-9C30-49E4108DA2E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5BDB13CB-33F7-4FE4-9C30-49E4108DA2E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5BDB13CB-33F7-4FE4-9C30-49E4108DA2E6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6BFD8D62-6587-45E0-8DB3-93564D9BF12B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6BFD8D62-6587-45E0-8DB3-93564D9BF12B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6BFD8D62-6587-45E0-8DB3-93564D9BF12B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6BFD8D62-6587-45E0-8DB3-93564D9BF12B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{56842995-D64E-4AEB-8F7C-D4C21BFD3466}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{56842995-D64E-4AEB-8F7C-D4C21BFD3466}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{56842995-D64E-4AEB-8F7C-D4C21BFD3466}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -63,19 +43,39 @@ Global
 		{3F33CC33-A03C-4940-A743-88488BDB5F3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3F33CC33-A03C-4940-A743-88488BDB5F3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3F33CC33-A03C-4940-A743-88488BDB5F3E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1C390DD-89AC-4584-8D05-EBB829DB5868}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1C390DD-89AC-4584-8D05-EBB829DB5868}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1C390DD-89AC-4584-8D05-EBB829DB5868}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1C390DD-89AC-4584-8D05-EBB829DB5868}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1207FFA6-D7F1-4570-BE06-2BA4D77DEB5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1207FFA6-D7F1-4570-BE06-2BA4D77DEB5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1207FFA6-D7F1-4570-BE06-2BA4D77DEB5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1207FFA6-D7F1-4570-BE06-2BA4D77DEB5E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A0FDDF1-5D49-4F6A-AAFF-2A0BBBC35BFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A0FDDF1-5D49-4F6A-AAFF-2A0BBBC35BFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A0FDDF1-5D49-4F6A-AAFF-2A0BBBC35BFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A0FDDF1-5D49-4F6A-AAFF-2A0BBBC35BFA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33A23EC5-0056-44FE-9A31-115361FFA9F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33A23EC5-0056-44FE-9A31-115361FFA9F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33A23EC5-0056-44FE-9A31-115361FFA9F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33A23EC5-0056-44FE-9A31-115361FFA9F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{522DC371-DD14-4706-97F8-2825EEA9279D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{522DC371-DD14-4706-97F8-2825EEA9279D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{522DC371-DD14-4706-97F8-2825EEA9279D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{522DC371-DD14-4706-97F8-2825EEA9279D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{8E21B661-CF36-4DFF-A0C2-4298C60DDA06} = {85076737-0445-4D5F-B4B3-A8CBF62AAC4B}
-		{6364CF5D-EC9E-439D-B908-68FB07E7ABAA} = {85076737-0445-4D5F-B4B3-A8CBF62AAC4B}
-		{9BFE2510-8392-473C-8E8B-3BAD63A9C57B} = {85076737-0445-4D5F-B4B3-A8CBF62AAC4B}
-		{5BDB13CB-33F7-4FE4-9C30-49E4108DA2E6} = {85076737-0445-4D5F-B4B3-A8CBF62AAC4B}
-		{6BFD8D62-6587-45E0-8DB3-93564D9BF12B} = {85076737-0445-4D5F-B4B3-A8CBF62AAC4B}
 		{B9F3DB1B-C788-409A-8703-A44BE8F6594D} = {BE399B94-2005-45B8-89E2-E46C476A2F93}
 		{56842995-D64E-4AEB-8F7C-D4C21BFD3466} = {B9F3DB1B-C788-409A-8703-A44BE8F6594D}
 		{96C1F919-6301-45F8-931C-4B27BF8A02C2} = {85076737-0445-4D5F-B4B3-A8CBF62AAC4B}
 		{3F33CC33-A03C-4940-A743-88488BDB5F3E} = {85076737-0445-4D5F-B4B3-A8CBF62AAC4B}
+		{B1C390DD-89AC-4584-8D05-EBB829DB5868} = {85076737-0445-4D5F-B4B3-A8CBF62AAC4B}
+		{1207FFA6-D7F1-4570-BE06-2BA4D77DEB5E} = {85076737-0445-4D5F-B4B3-A8CBF62AAC4B}
+		{3A0FDDF1-5D49-4F6A-AAFF-2A0BBBC35BFA} = {85076737-0445-4D5F-B4B3-A8CBF62AAC4B}
+		{33A23EC5-0056-44FE-9A31-115361FFA9F2} = {85076737-0445-4D5F-B4B3-A8CBF62AAC4B}
+		{522DC371-DD14-4706-97F8-2825EEA9279D} = {85076737-0445-4D5F-B4B3-A8CBF62AAC4B}
 	EndGlobalSection
 EndGlobal

@@ -24,7 +24,7 @@
     <ProjectReference Include="..\BookingService.Booking.Api.Contracts\BookingService.Booking.Api.Contracts.csproj" />
     <ProjectReference Include="..\BookingService.Booking.AppServices\BookingService.Booking.AppServices.csproj" />
     <ProjectReference Include="..\BookingService.Booking.Domain\BookingService.Booking.Domain.csproj" />
-    <ProjectReference Include="..\src\BookingService.Booking.Persistence\BookingService.Booking.Persistence.csproj" />
+    <ProjectReference Include="..\BookingService.Booking.Persistence\BookingService.Booking.Persistence.csproj" />
   </ItemGroup>
 
 	<ItemGroup>
