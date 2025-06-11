@@ -8,7 +8,6 @@ namespace BookingService.Booking.AppServices.Bookings
         public static void AddAppServices(this IServiceCollection services)
         {
             services.AddScoped<IBookingsService, BookingService>();
-            services.AddScoped<IBookingsQueries, BookingQueries>();
             services.AddSingleton<ICurrentDateTimeProvider, DefaultCurrentDateTimeProvider>();
         }
     }

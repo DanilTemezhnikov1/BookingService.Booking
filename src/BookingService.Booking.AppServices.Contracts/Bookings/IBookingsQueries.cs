@@ -4,6 +4,6 @@ namespace BookingService.Booking.AppServices.Bookings
     public interface IBookingsQueries
     {
         Task<BookingData[]> GetByFilter(GetBookingsByFilterQuery getBookingsByFilter);
-        Task<string> GetStatusById(long? id);
+        Task<string> GetStatusById(long id);
     }
 }

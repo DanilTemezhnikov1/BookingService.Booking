@@ -1,4 +1,5 @@
-﻿using BookingService.Booking.Domain;
+﻿using BookingService.Booking.AppServices.Bookings;
+using BookingService.Booking.Domain;
 using BookingService.Booking.Domain.Bookings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,6 +19,7 @@ namespace BookingService.Booking.Persistence
 
             services.AddScoped<IBookingsRepository, BookingsRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IBookingsQueries, BookingQueries>();
 
             services.AddDbContext<BookingsContext>(
                (ctx, context) =>

@@ -1,6 +1,7 @@
 ﻿using BookingService.Booking.AppServices.Bookings;
 using BookingService.Booking.AppServices.Exceptions;
 using BookingService.Booking.Domain.Exceptions;
+using BookingService.Booking.Persistence;
 using Hellang.Middleware.ProblemDetails;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
@@ -27,7 +28,10 @@ namespace BookingService.Booking.Host
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Booking Service API", Version = "v1", Description = "API для сервиса бронирования" });
 
             });
+
             services.AddAppServices();
+            services.AddPersistence(_configuration.GetConnectionString("BookingsContext"));
+
             services.AddProblemDetails(options =>
             {
                 // Если окружение Development, включаем подробное описание ошибки в ответ.
