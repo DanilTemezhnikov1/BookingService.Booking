@@ -8,9 +8,9 @@ namespace BookingService.Booking.Persistence
     {
         public DbSet<BookingAggregate> Bookings { get; set; }
 
-        public BookingsContext(DbContextOptions<BookingsContext> dbContextOptionsBuilder) { }
+        public BookingsContext(DbContextOptions<BookingsContext> options) : base(options) { }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {   
+        {
             modelBuilder.ApplyConfiguration<BookingAggregate>(new BookingAggregateConfiguration());
             base.OnModelCreating(modelBuilder);
         }

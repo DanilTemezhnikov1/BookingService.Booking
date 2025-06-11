@@ -33,18 +33,18 @@ namespace BookingService.Booking.Persistence.Configurations
             builder.Property(x => x.IdBooking)
                 .HasColumnName("resource_id")
                 .HasColumnType("bigint");
-            
-            
+
+
             builder.Property(x => x.StartBooking)
                 .HasColumnName("start_date")
-                .HasColumnType("date"); 
-            
-            
+                .HasColumnType("date");
+
+
             builder.Property(x => x.EndBooking)
                 .HasColumnName("end_date")
                 .HasColumnType("date");
-            
-            
+
+
             builder.Property(x => x.CreationBooking)
                 .HasColumnName("created_at_date_time")
                 .HasColumnType("timestamptz");
