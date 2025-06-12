@@ -24,6 +24,12 @@ namespace BookingService.Booking.Domain.Bookings
             EndBooking = endBooking;
             CreationBooking = creationBooking;
         }
+        public void SetCatalogRequestId(Guid catalogRequestId)
+        {
+            if (catalogRequestId == default) throw new DomainException();
+            if (CatalogRequestId == null) CatalogRequestId = catalogRequestId;
+            else throw new DomainException();
+        }
         public static BookingAggregate Initialize(long idUser, long idBooking, DateOnly startBooking, DateOnly endBooking, DateTimeOffset creationBooking)
         {
             if (idUser <= 0 || idBooking <= 0) throw new DomainException("Id должен быть больше нуля");
