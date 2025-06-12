@@ -5,6 +5,7 @@ namespace BookingService.Booking.Domain.Bookings
 {
     public class BookingAggregate
     {
+        public Guid? CatalogRequestId { get; private set; }
         public long Id { get; private set; }
         public BookingStatus Status { get; private set; }
         public long IdUser { get; private set; }
