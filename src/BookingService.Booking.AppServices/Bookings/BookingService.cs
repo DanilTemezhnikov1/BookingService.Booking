@@ -32,7 +32,7 @@ namespace BookingService.Booking.AppServices.Bookings
         }
         public async Task<BookingData> GetById(long id)
         {
-            return await _bookingsRepository.GetById(id).Result.ToBookingData();
+            return _bookingsRepository.GetById(id).Result.ToBookingData();
         }
         public async Task Cancel(long id)
         {

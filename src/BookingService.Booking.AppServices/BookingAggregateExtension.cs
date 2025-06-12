@@ -5,7 +5,7 @@ namespace BookingService.Booking.AppServices
 {
     public static class BookingAggregateExtension
     {
-        public static async Task<BookingData> ToBookingData(this BookingAggregate? aggregate)
+        public static BookingData ToBookingData(this BookingAggregate? aggregate)
         {
             return new BookingData
             {
