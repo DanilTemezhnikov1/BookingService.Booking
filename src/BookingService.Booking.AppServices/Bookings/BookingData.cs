@@ -2,7 +2,6 @@
 
 namespace BookingService.Booking.AppServices.Bookings
 {
-
     public class BookingData
     {
         public long Id;
