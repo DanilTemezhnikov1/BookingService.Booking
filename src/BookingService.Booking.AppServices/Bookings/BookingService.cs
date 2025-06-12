@@ -2,10 +2,14 @@
 using BookingService.Booking.AppServices.Queries;
 using BookingService.Booking.Domain;
 using BookingService.Booking.Domain.Bookings;
+using BookingService.Catalog.Api.Contracts.BookingJobs;
+using BookingService.Catalog.Api.Contracts.BookingJobs.Commands;
+using BookingService.Catalog.Api.Contracts.BookingJobs.Queries;
+using RestEase;
 
 namespace BookingService.Booking.AppServices.Bookings
 {
-    internal class BookingService : IBookingsService
+    internal class BookingService : IBookingsService, IBookingJobsController 
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IBookingsRepository _bookingsRepository;
@@ -40,6 +44,21 @@ namespace BookingService.Booking.AppServices.Bookings
             aggregate.Cancel();
             _bookingsRepository.Update(aggregate);
             await _unitOfWork.CommitAsync();
+        }
+
+        public Task<long> CreateBookingJob([Body] CreateBookingJobCommand command, CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task CancelBookingJob([Body] CancelBookingJobByRequestIdCommand command, CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<BookingJobStatus?> GetBookingJobStatusByRequestId([Body] GetBookingJobStatusByRequestIdQuery query, CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
         }
     }
 }
