@@ -1,6 +1,7 @@
 ﻿using BookingService.Booking.Api.Contracts.Bookings;
 using BookingService.Booking.Api.Contracts.Bookings.Requests;
 using BookingService.Booking.AppServices.Bookings;
+using BookingService.Booking.AppServices.Contracts;
 using BookingService.Booking.Host.Mapping;
 using Microsoft.AspNetCore.Mvc;
 
@@ -34,13 +35,13 @@ namespace BookingService.Booking.Host.Controllers
 
         [HttpPost]
         [Route(WebRoutes.Cancel)]
-        public async Task CancelBooking([FromBody] long? id)
+        public async Task CancelBooking([FromBody] long id)
         {
             await _bookingsService.Cancel(id);
         }
         [HttpGet]
         [Route(WebRoutes.GetById)]
-        public async Task<BookingData> GetBookingById([FromRoute] long? id)
+        public async Task<BookingData> GetBookingById([FromRoute] long id)
         {
             return await _bookingsService.GetById(id);
         }

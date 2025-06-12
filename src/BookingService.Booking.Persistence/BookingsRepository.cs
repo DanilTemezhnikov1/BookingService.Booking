@@ -15,13 +15,10 @@ namespace BookingService.Booking.Persistence
         {
             _dbset.Add(aggregate);
         }
-
-
-        public ValueTask<BookingAggregate?> GetById(long id, CancellationToken token)
+        public async ValueTask<BookingAggregate?> GetById(long id, CancellationToken token = default)
         {
-            return _dbset.FindAsync(id, token);
+            return await _dbset.FindAsync(id, token);
         }
-
         public void Update(BookingAggregate aggregate)
         {
             _dbset.Attach(aggregate);

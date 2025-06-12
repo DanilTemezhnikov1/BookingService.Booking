@@ -1,11 +1,11 @@
 ﻿using BookingService.Booking.AppServices.Bookings;
 using BookingService.Booking.Domain.Bookings;
 
-namespace BookingService.Booking.Persistence
+namespace BookingService.Booking.AppServices
 {
     public static class BookingAggregateExtension
     {
-        public static BookingData ToBookingData(this BookingAggregate aggregate)
+        public static async Task<BookingData> ToBookingData(this BookingAggregate? aggregate)
         {
             return new BookingData
             {

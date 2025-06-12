@@ -1,5 +1,6 @@
-﻿using BookingService.Booking.AppServices.Queries;
-namespace BookingService.Booking.AppServices.Bookings
+﻿using BookingService.Booking.AppServices.Bookings;
+using BookingService.Booking.AppServices.Queries;
+namespace BookingService.Booking.AppServices.Contracts
 {
     public interface IBookingsQueries
     {

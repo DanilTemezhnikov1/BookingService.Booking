@@ -1,10 +1,10 @@
-﻿using BookingService.Booking.AppServices.Queries;
+﻿using BookingService.Booking.AppServices.Bookings;
+using BookingService.Booking.AppServices.Contracts;
+using BookingService.Booking.AppServices.Queries;
 using BookingService.Booking.Domain.Bookings;
-using BookingService.Booking.Persistence;
-using BookingService.Booking.Persistence.Configurations;
 using Microsoft.EntityFrameworkCore;
 
-namespace BookingService.Booking.AppServices.Bookings
+namespace BookingService.Booking.Persistence
 {
     internal class BookingQueries : IBookingsQueries
     {
@@ -14,7 +14,6 @@ namespace BookingService.Booking.AppServices.Bookings
         {
             _context = context;
         }
-
         public async Task<BookingData[]> GetByFilter(GetBookingsByFilterQuery getBookingsByFilter)
         {
             var bookingsQuery = _context.Bookings.AsQueryable();
@@ -34,7 +33,7 @@ namespace BookingService.Booking.AppServices.Bookings
             if (getBookingsByFilter.IdBooking.HasValue)
                 bookingsQuery = bookingsQuery
                     .Where(x => x.IdBooking == getBookingsByFilter.IdBooking.Value);
-            
+
             if (getBookingsByFilter.StartBooking.HasValue)
                 bookingsQuery = bookingsQuery
                     .Where(x => x.StartBooking == getBookingsByFilter.StartBooking.Value);
@@ -48,6 +47,7 @@ namespace BookingService.Booking.AppServices.Bookings
                     .Where(x => x.CreationBooking == getBookingsByFilter.CreationBooking.Value);
 
             return await bookingsQuery.Select(x => x.ToBookingData()).ToArrayAsync();
+
         }
         public async Task<string> GetStatusById(long id)
         {
