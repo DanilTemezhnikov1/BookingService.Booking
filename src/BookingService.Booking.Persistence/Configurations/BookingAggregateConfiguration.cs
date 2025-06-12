@@ -14,6 +14,9 @@ namespace BookingService.Booking.Persistence.Configurations
             builder.HasKey(x => x.Id)
                 .HasName("pk_bookings");
 
+            builder.Property(x => x.CatalogRequestId)
+                .HasColumnName("catalog_request_id")
+                .HasColumnType("uuid");
 
             builder.Property(x => x.Id)
                 .HasColumnName("id")
