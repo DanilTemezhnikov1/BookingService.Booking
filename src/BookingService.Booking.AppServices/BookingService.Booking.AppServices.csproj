@@ -21,8 +21,4 @@
     <ProjectReference Include="..\BookingService.Booking.Domain\BookingService.Booking.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Bookings\Jobs\" />
-  </ItemGroup>
-
 </Project>
