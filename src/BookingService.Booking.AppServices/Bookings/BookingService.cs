@@ -48,6 +48,10 @@ namespace BookingService.Booking.AppServices.Bookings
             aggregate.Cancel();
             _bookingsRepository.Update(aggregate);
             await _unitOfWork.CommitAsync();
+            if (aggregate.CatalogRequestId != null) 
+                await _vbookingJobsController.CancelBookingJob(
+                    new CancelBookingJobByRequestIdCommand { 
+                        RequestId = aggregate.CatalogRequestId.Value });
         }
     }
 }
