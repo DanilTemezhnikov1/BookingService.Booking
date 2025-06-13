@@ -33,10 +33,9 @@ namespace BookingService.Booking.AppServices.Bookings
                 createBooking.EndBooking,
                 _currentDateTimeProvider.Now);
             aggregate.SetCatalogRequestId(Guid.NewGuid());
-            _bookingsRepository.Create(aggregate);
-           
-          //  _vbookingJobsController.CreateBookingJob((CreateBookingJobCommand)aggregate);
+            _bookingsRepository.Create(aggregate);          
             await _unitOfWork.CommitAsync();
+            await _vbookingJobsController.CreateBookingJob(aggregate.ToCreateBookingJobCommand());
             return aggregate.Id;
         }
         public async Task<BookingData> GetById(long id)

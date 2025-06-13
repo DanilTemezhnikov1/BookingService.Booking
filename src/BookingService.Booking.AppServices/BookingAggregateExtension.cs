@@ -1,5 +1,6 @@
 ﻿using BookingService.Booking.AppServices.Bookings;
 using BookingService.Booking.Domain.Bookings;
+using BookingService.Catalog.Api.Contracts.BookingJobs.Commands;
 
 namespace BookingService.Booking.AppServices
 {
@@ -16,6 +17,16 @@ namespace BookingService.Booking.AppServices
                 StartBooking = aggregate.StartBooking,
                 EndBooking = aggregate.EndBooking,
                 CreationBooking = aggregate.CreationBooking
+            };
+        }
+        public static CreateBookingJobCommand ToCreateBookingJobCommand(this BookingAggregate aggregate)
+        {
+            return new CreateBookingJobCommand
+            {
+                RequestId = aggregate.CatalogRequestId.Value,
+                ResourceId = aggregate.Id,
+                StartDate = aggregate.StartBooking,
+                EndDate = aggregate.EndBooking,
             };
         }
     }
