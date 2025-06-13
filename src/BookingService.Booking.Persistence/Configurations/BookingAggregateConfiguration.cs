@@ -11,16 +11,18 @@ namespace BookingService.Booking.Persistence.Configurations
             builder.ToTable("bookings");
 
 
-            builder.HasKey(x => x.Id)
-                .HasName("pk_bookings");
-
-            builder.Property(x => x.CatalogRequestId)
-                .HasColumnName("catalog_request_id")
-                .HasColumnType("uuid");
+            builder.HasKey(x => x.Id);
+        
 
             builder.Property(x => x.Id)
                 .HasColumnName("id")
-                .HasColumnType("bigint");
+                .HasColumnType("bigint")
+                .UseSerialColumn();
+
+
+            builder.Property(x => x.CatalogRequestId)
+               .HasColumnName("catalog_request_id")
+               .HasColumnType("uuid");
 
 
             builder.Property(x => x.Status)

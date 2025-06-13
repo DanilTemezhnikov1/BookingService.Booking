@@ -4,7 +4,7 @@ namespace BookingService.Booking.AppServices.Bookings
 {
     public class BookingData
     {
-        public long Id;
+        public long? Id;
         public BookingStatus Status;
         public long IdUser;
         public long IdBooking;

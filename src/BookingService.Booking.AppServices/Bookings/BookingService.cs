@@ -9,17 +9,19 @@ using RestEase;
 
 namespace BookingService.Booking.AppServices.Bookings
 {
-    internal class BookingService : IBookingsService, IBookingJobsController 
+    internal class BookingService : IBookingsService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IBookingsRepository _bookingsRepository;
         private readonly ICurrentDateTimeProvider _currentDateTimeProvider;
+        private readonly IBookingJobsController _vbookingJobsController;
 
-        public BookingService(IUnitOfWork unitOfWork, ICurrentDateTimeProvider timeProvider)
+        public BookingService(IUnitOfWork unitOfWork, ICurrentDateTimeProvider timeProvider, IBookingJobsController vbookingJobsController)
         {
             _unitOfWork = unitOfWork;
             _bookingsRepository = _unitOfWork.BookingsRepository;
             _currentDateTimeProvider = timeProvider;
+            _vbookingJobsController = vbookingJobsController;
         }
 
         public async Task<long> Create(CreateBookingQuery createBooking)
@@ -30,7 +32,10 @@ namespace BookingService.Booking.AppServices.Bookings
                 createBooking.StartBooking,
                 createBooking.EndBooking,
                 _currentDateTimeProvider.Now);
+            aggregate.SetCatalogRequestId(Guid.NewGuid());
             _bookingsRepository.Create(aggregate);
+           
+          //  _vbookingJobsController.CreateBookingJob((CreateBookingJobCommand)aggregate);
             await _unitOfWork.CommitAsync();
             return aggregate.Id;
         }
@@ -44,21 +49,6 @@ namespace BookingService.Booking.AppServices.Bookings
             aggregate.Cancel();
             _bookingsRepository.Update(aggregate);
             await _unitOfWork.CommitAsync();
-        }
-
-        public Task<long> CreateBookingJob([Body] CreateBookingJobCommand command, CancellationToken cancellationToken = default)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task CancelBookingJob([Body] CancelBookingJobByRequestIdCommand command, CancellationToken cancellationToken = default)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<BookingJobStatus?> GetBookingJobStatusByRequestId([Body] GetBookingJobStatusByRequestIdQuery query, CancellationToken cancellationToken = default)
-        {
-            throw new NotImplementedException();
         }
     }
 }
