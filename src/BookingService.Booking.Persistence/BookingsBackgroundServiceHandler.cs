@@ -1,0 +1,47 @@
+﻿using BookingService.Booking.AppServices.Bookings.Jobs;
+using BookingService.Booking.AppServices.Exceptions;
+using BookingService.Booking.Domain.Bookings;
+using BookingService.Booking.Domain.Contracts.Bookings;
+using BookingService.Catalog.Api.Contracts.BookingJobs;
+using BookingService.Catalog.Api.Contracts.BookingJobs.Queries;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace BookingService.Booking.Persistence
+{
+    public class BookingsBackgroundServiceHandler : IBookingsBackgroundServiceHandler
+    {
+        private readonly IBookingsBackgroundQueries _bookingsBackgroundQueries;
+        private readonly IBookingJobsController _bookingJobsController;
+        private readonly ILogger<BookingsBackgroundServiceHandler> _logger;
+
+        public BookingsBackgroundServiceHandler(IBookingsBackgroundQueries bookingsBackgroundQueries, IBookingJobsController bookingJobsController, ILogger<BookingsBackgroundServiceHandler> logger)
+        {
+            _bookingsBackgroundQueries = bookingsBackgroundQueries;
+            _bookingJobsController = bookingJobsController;
+            _logger = logger;
+        }
+
+        public async Task Handle(CancellationToken cancellationToken)
+        {
+            var bookingAggregates = _bookingsBackgroundQueries.GetConfirmationAwaitingBookings(10);
+            foreach (var bookingAggregate in bookingAggregates)
+            {
+                _logger.LogWarning("У агрегата {0} некорректное состояние", bookingAggregate.Id);
+                var jobStatus = await _bookingJobsController.GetBookingJobStatusByRequestId(
+                     new GetBookingJobStatusByRequestIdQuery
+                     { RequestId = bookingAggregate.CatalogRequestId.Value });
+                switch (jobStatus)
+                {
+                    case BookingJobStatus.Confirmed: bookingAggregate.Confirm(); break;
+                    case BookingJobStatus.Cancelled: bookingAggregate.Cancel(); break;
+                    default: throw new ValidationException("Некорректное состояние");
+                };
+            }
+        }
+    }
+}
