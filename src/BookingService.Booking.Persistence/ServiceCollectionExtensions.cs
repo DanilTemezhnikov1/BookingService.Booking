@@ -20,6 +20,7 @@ namespace BookingService.Booking.Persistence
             services.AddScoped<IBookingsRepository, BookingsRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IBookingsQueries, BookingQueries>();
+            services.AddScoped<IBookingsBackgroundQueries, BookingsBackgroundQueries>();
 
             services.AddDbContext<BookingsContext>(
                (ctx, context) =>
