@@ -29,7 +29,7 @@ namespace BookingService.Booking.Host
 
             });
 
-            services.AddAppServices(_configuration);
+            services.AddAppServices();
             services.AddPersistence(_configuration.GetConnectionString("BookingsContext"));
           //  services.AddAppServices();
 

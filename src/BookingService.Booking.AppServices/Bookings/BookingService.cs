@@ -25,7 +25,7 @@ namespace BookingService.Booking.AppServices.Bookings
                 createBooking.IdBooking,
                 createBooking.StartBooking,
                 createBooking.EndBooking,
-                _currentDateTimeProvider.Now);
+                _currentDateTimeProvider.UtcNow);
             _bookingsRepository.Create(aggregate);
             await _unitOfWork.CommitAsync();
             return aggregate.Id;
