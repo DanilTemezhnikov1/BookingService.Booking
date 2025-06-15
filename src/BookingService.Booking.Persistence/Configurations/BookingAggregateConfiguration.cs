@@ -12,12 +12,11 @@ namespace BookingService.Booking.Persistence.Configurations
 
 
             builder.HasKey(x => x.Id);
-        
+
 
             builder.Property(x => x.Id)
                 .HasColumnName("id")
-                .HasColumnType("bigint")
-                .UseSerialColumn();
+                .HasColumnType("bigint");
 
 
             builder.Property(x => x.CatalogRequestId)

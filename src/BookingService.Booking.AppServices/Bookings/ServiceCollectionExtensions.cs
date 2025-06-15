@@ -22,7 +22,7 @@ namespace BookingService.Booking.AppServices.Bookings
    (ctx, client) =>
    {
        var options = ctx.GetRequiredService<IOptions<BookingCatalogRestOptions>>().Value;
-       client.BaseAddress = new Uri(options.BaseAddress);
+     //  client.BaseAddress = new Uri(options.BaseAddress);
        client.Timeout = TimeSpan.FromSeconds(90);
    }).AddTransientHttpErrorPolicy(builder => builder
    .WaitAndRetryAsync(4, retryAttempt => 

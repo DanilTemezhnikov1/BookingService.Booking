@@ -1,14 +1,12 @@
 ﻿using BookingService.Booking.Domain.Contracts.Bookings;
 using BookingService.Booking.Domain.Exceptions;
-using System.ComponentModel.DataAnnotations;
 
 namespace BookingService.Booking.Domain.Bookings
 {
     public class BookingAggregate
     {
         public Guid? CatalogRequestId { get; private set; }
-        [Key]
-        public long Id { get; private set; }
+        public long Id { get; set; }
         public BookingStatus Status { get; private set; }
         public long IdUser { get; private set; }
         public long IdBooking { get; private set; }
