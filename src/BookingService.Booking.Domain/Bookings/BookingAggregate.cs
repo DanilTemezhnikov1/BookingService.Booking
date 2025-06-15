@@ -5,7 +5,9 @@ namespace BookingService.Booking.Domain.Bookings
 {
     public class BookingAggregate
     {
-        public long Id { get; private set; }
+        public Guid? CatalogRequestId { get; private set; }
+        [Key]
+        public long Id { get; set; }
         public BookingStatus Status { get; private set; }
         public long IdUser { get; private set; }
         public long IdBooking { get; private set; }
@@ -22,6 +24,12 @@ namespace BookingService.Booking.Domain.Bookings
             StartBooking = startBooking;
             EndBooking = endBooking;
             CreationBooking = creationBooking;
+        }
+        public void SetCatalogRequestId(Guid catalogRequestId)
+        {
+            if (catalogRequestId == default) throw new DomainException();
+            if (CatalogRequestId == null) CatalogRequestId = catalogRequestId;
+            else throw new DomainException();
         }
         public static BookingAggregate Initialize(long idUser, long idBooking, DateOnly startBooking, DateOnly endBooking, DateTimeOffset creationBooking)
         {
