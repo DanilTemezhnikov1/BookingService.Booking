@@ -31,7 +31,7 @@ namespace BookingService.Booking.Host
 
             services.AddAppServices();
             services.AddPersistence(_configuration.GetConnectionString("BookingsContext"));
-          //  services.AddAppServices();
+            services.AddAppServices();
 
             services.AddProblemDetails(options =>
             {
