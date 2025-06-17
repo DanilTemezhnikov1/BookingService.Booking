@@ -1,4 +1,4 @@
-﻿using BookingService.Booking.AppServices.Bookings.Jobs;
+﻿
 using BookingService.Booking.AppServices.Contracts;
 using BookingService.Booking.Domain;
 using BookingService.Booking.Domain.Bookings;
