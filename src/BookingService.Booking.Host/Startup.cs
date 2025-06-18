@@ -28,8 +28,9 @@ namespace BookingService.Booking.Host
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Booking Service API", Version = "v1", Description = "API для сервиса бронирования" });
 
             });
-
-            services.AddAppServices();
+            var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+            Console.WriteLine($"Current ASPNETCORE_ENVIRONMENT: {env ?? "Not set"}");
+            services.AddAppServices(_configuration);
             services.AddPersistence(_configuration.GetConnectionString("BookingsContext"));
             services.AddAppServices();
 
