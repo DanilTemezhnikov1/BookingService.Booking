@@ -1,10 +1,10 @@
 ﻿using BookingService.Booking.AppServices.Bookings;
 using BookingService.Booking.AppServices.Queries;
-namespace BookingService.Booking.AppServices.Contracts
+
+namespace BookingService.Booking.AppServices.Contracts;
+
+public interface IBookingsQueries
 {
-    public interface IBookingsQueries
-    {
-        Task<BookingData[]> GetByFilter(GetBookingsByFilterQuery getBookingsByFilter);
-        Task<string> GetStatusById(long id);
-    }
+    Task<BookingData[]> GetByFilter(GetBookingsByFilterQuery getBookingsByFilter);
+    Task<string> GetStatusById(long id);
 }

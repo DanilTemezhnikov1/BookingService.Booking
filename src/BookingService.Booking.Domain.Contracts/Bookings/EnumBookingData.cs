@@ -1,9 +1,8 @@
-﻿namespace BookingService.Booking.Domain.Contracts.Bookings
+﻿namespace BookingService.Booking.Domain.Contracts.Bookings;
+
+public enum BookingStatus
 {
-    public enum BookingStatus
-    {
-        AwaitsConfirmation,
-        Confirmed,
-        Cancelled
-    }
+    AwaitsConfirmation,
+    Confirmed,
+    Cancelled
 }

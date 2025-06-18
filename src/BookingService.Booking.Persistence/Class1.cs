@@ -1,7 +1,5 @@
-﻿namespace BookingService.Booking.Persistence
-{
-    public class Class1
-    {
+﻿namespace BookingService.Booking.Persistence;
 
-    }
+public class Class1
+{
 }

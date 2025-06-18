@@ -1,15 +1,14 @@
 ﻿using BookingService.Booking.Domain.Contracts.Bookings;
 
-namespace BookingService.Booking.AppServices.Bookings
+namespace BookingService.Booking.AppServices.Bookings;
+
+public class BookingData
 {
-    public class BookingData
-    {
-        public long Id;
-        public BookingStatus Status;
-        public long IdUser;
-        public long IdBooking;
-        public DateOnly StartBooking;
-        public DateOnly EndBooking;
-        public DateTimeOffset CreationBooking;
-    }
+    public DateTimeOffset CreationBooking;
+    public DateOnly EndBooking;
+    public long Id;
+    public long IdBooking;
+    public long IdUser;
+    public DateOnly StartBooking;
+    public BookingStatus Status;
 }
