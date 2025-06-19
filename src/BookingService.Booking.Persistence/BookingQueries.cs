@@ -1,6 +1,5 @@
 ﻿using BookingService.Booking.AppServices;
 using BookingService.Booking.AppServices.Bookings;
-using BookingService.Booking.AppServices.Contracts;
 using BookingService.Booking.AppServices.Queries;
 using BookingService.Booking.Domain.Bookings;
 using Microsoft.EntityFrameworkCore;

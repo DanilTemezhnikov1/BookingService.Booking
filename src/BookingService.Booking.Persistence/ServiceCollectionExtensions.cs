@@ -1,9 +1,9 @@
-﻿using BookingService.Booking.AppServices.Contracts;
-using BookingService.Booking.Domain;
+﻿using BookingService.Booking.Domain;
 using BookingService.Booking.Domain.Bookings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using BookingService.Booking.AppServices;
 
 namespace BookingService.Booking.Persistence;
 

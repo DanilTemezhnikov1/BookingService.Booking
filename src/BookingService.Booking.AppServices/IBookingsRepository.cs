@@ -1,4 +1,6 @@
-﻿namespace BookingService.Booking.Domain.Bookings;
+﻿using BookingService.Booking.Domain.Bookings;
+
+namespace BookingService.Booking.AppServices;
 
 public interface IBookingsRepository
 {

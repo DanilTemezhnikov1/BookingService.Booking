@@ -1,7 +1,7 @@
 ﻿using BookingService.Booking.Api.Contracts.Bookings;
 using BookingService.Booking.Api.Contracts.Bookings.Requests;
 using BookingService.Booking.AppServices.Bookings;
-using BookingService.Booking.AppServices.Contracts;
+using BookingService.Booking.AppServices;
 using BookingService.Booking.Host.Mapping;
 using Microsoft.AspNetCore.Mvc;
 

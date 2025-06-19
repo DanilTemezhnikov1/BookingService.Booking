@@ -1,5 +1,5 @@
-﻿using BookingService.Booking.Domain;
-using BookingService.Booking.Domain.Bookings;
+﻿using BookingService.Booking.AppServices;
+using BookingService.Booking.Domain;
 
 namespace BookingService.Booking.Persistence;
 
