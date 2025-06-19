@@ -1,7 +1,4 @@
-﻿using BookingService.Booking.AppServices;
-using BookingService.Booking.Domain.Bookings;
-
-namespace BookingService.Booking.Domain;
+﻿namespace BookingService.Booking.AppServices;
 
 public interface IUnitOfWork
 {
