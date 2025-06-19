@@ -65,7 +65,7 @@ services:
     container_name: bookings-host
     build:
       context: .
-      dockerfile: src/BookingService.Catalog.Host/Dockerfile
+      dockerfile: src/BookingService.Booking.Host/Dockerfile
     depends_on:
       booking-service_bookings-db:
         condition: service_healthy

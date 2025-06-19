@@ -1,11 +1,10 @@
 ﻿using BookingService.Booking.AppServices.Queries;
 
-namespace BookingService.Booking.AppServices.Bookings
+namespace BookingService.Booking.AppServices.Bookings;
+
+public interface IBookingsService
 {
-    public interface IBookingsService
-    {
-        Task<long> Create(CreateBookingQuery createBooking);
-        Task<BookingData> GetById(long id);
-        Task Cancel(long id);
-    }
+    Task<long> Create(CreateBookingQuery createBooking, CancellationToken cancellationToken);
+    Task<BookingData> GetById(long id, CancellationToken cancellationToken);
+    Task Cancel(long id , CancellationToken cancellationToken);
 }

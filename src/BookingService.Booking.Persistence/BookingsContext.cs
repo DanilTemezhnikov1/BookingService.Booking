@@ -2,17 +2,19 @@
 using BookingService.Booking.Persistence.Configurations;
 using Microsoft.EntityFrameworkCore;
 
-namespace BookingService.Booking.Persistence
-{
-    public class BookingsContext : DbContext
-    {
-        public DbSet<BookingAggregate> Bookings { get; set; }
+namespace BookingService.Booking.Persistence;
 
-        public BookingsContext(DbContextOptions<BookingsContext> options) : base(options) { }
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.ApplyConfiguration<BookingAggregate>(new BookingAggregateConfiguration());
-            base.OnModelCreating(modelBuilder);
-        }
+public class BookingsContext : DbContext
+{
+    public BookingsContext(DbContextOptions<BookingsContext> options) : base(options)
+    {
+    }
+
+    public DbSet<BookingAggregate> Bookings { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.ApplyConfiguration(new BookingAggregateConfiguration());
+        base.OnModelCreating(modelBuilder);
     }
 }

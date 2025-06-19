@@ -1,7 +1,5 @@
-﻿namespace BookingService.Booking.AppServices.Contracts
-{
-    public class Class1
-    {
+﻿namespace BookingService.Booking.AppServices.Contracts;
 
-    }
+public class Class1
+{
 }

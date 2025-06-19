@@ -24,6 +24,31 @@ namespace BookingService.Booking.AppServices.Bookings
             _vbookingJobsController = vbookingJobsController;
         }
 
+    public async Task<long> Create(CreateBookingQuery createBooking, CancellationToken cancellationToken)
+    {
+        var aggregate = BookingAggregate.Initialize(
+            createBooking.IdUser,
+            createBooking.IdBooking,
+            createBooking.StartBooking,
+            createBooking.EndBooking,
+            _currentDateTimeProvider.UtcNow);
+        await _bookingsRepository.Create(aggregate, cancellationToken);
+        await _unitOfWork.CommitAsync(cancellationToken);
+        return aggregate.Id;
+    }
+
+    public async Task<BookingData> GetById(long id, CancellationToken cancellationToken)
+    {
+        var aggregate = await _bookingsRepository.GetById(id, cancellationToken);
+        return aggregate.ToBookingData();
+    }
+
+    public async Task Cancel(long id, CancellationToken cancellationToken)
+    {
+        var aggregate = await _unitOfWork.BookingsRepository.GetById(id, cancellationToken);
+        aggregate.Cancel();
+        await _bookingsRepository.Update(aggregate, cancellationToken);
+        await _unitOfWork.CommitAsync(cancellationToken);
         public async Task<long> Create(CreateBookingQuery createBooking)
         {
             var aggregate = BookingAggregate.Initialize(

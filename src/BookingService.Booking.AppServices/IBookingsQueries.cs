@@ -1,7 +1,7 @@
 ﻿using BookingService.Booking.AppServices.Bookings;
 using BookingService.Booking.AppServices.Queries;
 
-namespace BookingService.Booking.AppServices.Contracts;
+namespace BookingService.Booking.AppServices;
 
 public interface IBookingsQueries
 {
