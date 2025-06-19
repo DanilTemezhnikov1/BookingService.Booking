@@ -12,25 +12,21 @@ public class BookingAggregateConfiguration : IEntityTypeConfiguration<BookingAgg
 
 
         builder.HasKey(x => x.Id);
-                .HasName("pk_bookings");
-                .HasName("pk_bookings");
-                .HasName("pk_bookings");
-                .HasName("pk_bookings");
 
 
         builder.Property(x => x.Id)
-            builder.Property(x => x.CatalogRequestId)
-               .HasColumnName("catalog_request_id")
-               .HasColumnType("uuid");
+            .HasColumnName("id")
+            .HasColumnType("bigint");
 
 
-            builder.Property(x => x.Status)
-                .HasColumnName("status")
-                .HasColumnType("int");
+        builder.Property(x => x.CatalogRequestId)
+           .HasColumnName("catalog_request_id")
+           .HasColumnType("uuid");
 
-            builder.Property(x => x.Status)
-                .HasColumnName("status")
-                .HasColumnType("int");
+
+        builder.Property(x => x.Status)
+            .HasColumnName("status")
+            .HasColumnType("int");
 
 
         builder.Property(x => x.IdUser)
