@@ -18,7 +18,7 @@ internal class BookingService : IBookingsService
         _currentDateTimeProvider = timeProvider;
     }
 
-    public async Task<long> Create(CreateBookingQuery createBooking)
+    public async Task<long> Create(CreateBookingQuery createBooking, CancellationToken cancellationToken)
     {
         var aggregate = BookingAggregate.Initialize(
             createBooking.IdUser,
@@ -26,21 +26,22 @@ internal class BookingService : IBookingsService
             createBooking.StartBooking,
             createBooking.EndBooking,
             _currentDateTimeProvider.UtcNow);
-        _bookingsRepository.Create(aggregate);
-        await _unitOfWork.CommitAsync();
+        await _bookingsRepository.Create(aggregate, cancellationToken);
+        await _unitOfWork.CommitAsync(cancellationToken);
         return aggregate.Id;
     }
 
-    public async Task<BookingData> GetById(long id)
+    public async Task<BookingData> GetById(long id, CancellationToken cancellationToken)
     {
-        return _bookingsRepository.GetById(id).Result.ToBookingData();
+        var aggregate = await _bookingsRepository.GetById(id, cancellationToken);
+        return aggregate.ToBookingData();
     }
 
-    public async Task Cancel(long id)
+    public async Task Cancel(long id, CancellationToken cancellationToken)
     {
-        var aggregate = _unitOfWork.BookingsRepository.GetById(id).Result;
+        var aggregate = await _unitOfWork.BookingsRepository.GetById(id, cancellationToken);
         aggregate.Cancel();
-        _bookingsRepository.Update(aggregate);
-        await _unitOfWork.CommitAsync();
+        await _bookingsRepository.Update(aggregate, cancellationToken);
+        await _unitOfWork.CommitAsync(cancellationToken);
     }
 }

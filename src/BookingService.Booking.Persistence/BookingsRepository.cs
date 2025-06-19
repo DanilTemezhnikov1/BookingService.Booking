@@ -12,9 +12,9 @@ public class BookingsRepository : IBookingsRepository
         _dbset = context.Bookings;
     }
 
-    public void Create(BookingAggregate aggregate)
+    public async Task Create(BookingAggregate aggregate, CancellationToken cancellationToken)
     {
-        _dbset.Add(aggregate);
+         await _dbset.AddAsync(aggregate, cancellationToken);
     }
 
     public async ValueTask<BookingAggregate?> GetById(long id, CancellationToken token = default)
@@ -22,7 +22,7 @@ public class BookingsRepository : IBookingsRepository
         return await _dbset.FindAsync(id, token);
     }
 
-    public void Update(BookingAggregate aggregate)
+    public async Task Update(BookingAggregate aggregate, CancellationToken cancellationToken)
     {
         _dbset.Attach(aggregate);
         _dbset.Entry(aggregate).State = EntityState.Modified;

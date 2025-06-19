@@ -12,13 +12,13 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["BookingService.Booking.Host/BookingService.Booking.Host.csproj", "BookingService.Booking.Host/"]
-COPY ["BookingService.Booking.Api.Contracts/BookingService.Booking.Api.Contracts.csproj", "BookingService.Booking.Api.Contracts/"]
-COPY ["BookingService.Booking.AppServices/BookingService.Booking.AppServices.csproj", "BookingService.Booking.AppServices/"]
+COPY ["src/BookingService.Booking.Host/BookingService.Booking.Host.csproj", "BookingService.Booking.Host/"]
+COPY ["src/BookingService.Booking.Api.Contracts/BookingService.Booking.Api.Contracts.csproj", "BookingService.Booking.Api.Contracts/"]
+COPY ["src/BookingService.Booking.AppServices/BookingService.Booking.AppServices.csproj", "BookingService.Booking.AppServices/"]
 RUN dotnet restore "./BookingService.Booking.Host/BookingService.Booking.Host.csproj"
 COPY . .
 WORKDIR "/src/BookingService.Booking.Host"
-RUN dotnet build "./BookingService.Booking.Host.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "src/BookingService.Booking.Host/BookingService.Booking.Host.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # Этот этап используется для публикации проекта службы, который будет скопирован на последний этап
 FROM build AS publish

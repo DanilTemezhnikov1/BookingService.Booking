@@ -2,7 +2,7 @@
 
 public interface IBookingsRepository
 {
-    public void Create(BookingAggregate aggregate);
+    public Task Create(BookingAggregate aggregate, CancellationToken cancellationToken);
     public ValueTask<BookingAggregate?> GetById(long id, CancellationToken token = default);
-    public void Update(BookingAggregate aggregate);
+    public Task Update(BookingAggregate aggregate, CancellationToken cancellationToken);
 }

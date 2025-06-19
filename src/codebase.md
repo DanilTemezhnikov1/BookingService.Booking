@@ -1,25 +1,25 @@
 # BookingService.Booking.Api.Contracts\Bookings\Dtos\BookingDataResponse.cs
 
 ```cs
-using BookingService.Booking.Domain.Contracts.Bookings; namespace BookingService.Booking.Api.Contracts.Bookings.Dtos { public class BookingDataResponse { public long Id; public BookingStatus Status; public long IdUser; public long IdBooking; public DateOnly StartBooking; public DateOnly EndBooking; public DateTimeOffset CreationBooking; } }
+using BookingService.Booking.Domain.Contracts.Bookings; namespace BookingService.Booking.Api.Contracts.Bookings.Dtos; public class BookingDataResponse { public DateTimeOffset CreationBooking; public DateOnly EndBooking; public long Id; public long IdBooking; public long IdUser; public DateOnly StartBooking; public BookingStatus Status; }
 ```
 
 # BookingService.Booking.Api.Contracts\Bookings\Requests\CreateBookingRequest.cs
 
 ```cs
-namespace BookingService.Booking.Api.Contracts.Bookings.Requests { public record CreateBookingRequest(long IdUser, long IdBooking, DateOnly StartBooking, DateOnly EndBooking); }
+namespace BookingService.Booking.Api.Contracts.Bookings.Requests; public record CreateBookingRequest( long IdUser, long IdBooking, DateOnly StartBooking, DateOnly EndBooking);
 ```
 
 # BookingService.Booking.Api.Contracts\Bookings\Requests\GetBookingsByFilterRequest.cs
 
 ```cs
-using BookingService.Booking.Domain.Contracts.Bookings; namespace BookingService.Booking.Api.Contracts.Bookings.Requests { public record GetBookingsByFilterRequest(long Id, BookingStatus Status, long IdUser, long IdBooking, DateOnly StartBooking, DateOnly EndBooking, DateTimeOffset CreationBooking); }
+using BookingService.Booking.Domain.Contracts.Bookings; namespace BookingService.Booking.Api.Contracts.Bookings.Requests; public record GetBookingsByFilterRequest( long? Id, BookingStatus? Status, long? IdUser, long? IdBooking, DateOnly? StartBooking, DateOnly? EndBooking, DateTimeOffset? CreationBooking);
 ```
 
 # BookingService.Booking.Api.Contracts\Bookings\WebRoutes.cs
 
 ```cs
-namespace BookingService.Booking.Api.Contracts.Bookings { public static class WebRoutes { public const string BasePath = "api/bookings"; public const string Create = BasePath + "/create"; public const string GetById = BasePath + "/{id}"; public const string Cancel = BasePath + "/{id}/cancel"; public const string GetByFilter = BasePath + "/by-filter"; public const string GetStatusById = BasePath + "/{id}/status"; } }
+namespace BookingService.Booking.Api.Contracts.Bookings; public static class WebRoutes { public const string BasePath = "api/bookings"; public const string Create = BasePath + "/create"; public const string GetById = BasePath + "/{id}"; public const string Cancel = BasePath + "/{id}/cancel"; public const string GetByFilter = BasePath + "/by-filter"; public const string GetStatusById = BasePath + "/{id}/status"; }
 ```
 
 # BookingService.Booking.Api.Contracts\BookingService.Booking.Api.Contracts.csproj
@@ -31,7 +31,7 @@ namespace BookingService.Booking.Api.Contracts.Bookings { public static class We
 # BookingService.Booking.AppServices.Contracts\Bookings\IBookingsQueries.cs
 
 ```cs
-using BookingService.Booking.AppServices.Bookings; using BookingService.Booking.AppServices.Queries; namespace BookingService.Booking.AppServices.Contracts { public interface IBookingsQueries { Task<BookingData[]> GetByFilter(GetBookingsByFilterQuery getBookingsByFilter); Task<string> GetStatusById(long id); } }
+using BookingService.Booking.AppServices.Bookings; using BookingService.Booking.AppServices.Queries; namespace BookingService.Booking.AppServices.Contracts; public interface IBookingsQueries { Task<BookingData[]> GetByFilter(GetBookingsByFilterQuery getBookingsByFilter); Task<string> GetStatusById(long id); }
 ```
 
 # BookingService.Booking.AppServices.Contracts\BookingService.Booking.AppServices.Contracts.csproj
@@ -43,31 +43,31 @@ using BookingService.Booking.AppServices.Bookings; using BookingService.Booking.
 # BookingService.Booking.AppServices.Contracts\Class1.cs
 
 ```cs
-namespace BookingService.Booking.AppServices.Contracts { public class Class1 { } }
+namespace BookingService.Booking.AppServices.Contracts; public class Class1 { }
 ```
 
 # BookingService.Booking.AppServices\BookingAggregateExtension.cs
 
 ```cs
-using BookingService.Booking.AppServices.Bookings; using BookingService.Booking.Domain.Bookings; namespace BookingService.Booking.AppServices { public static class BookingAggregateExtension { public static BookingData ToBookingData(this BookingAggregate? aggregate) { return new BookingData { Id = aggregate.Id, Status = aggregate.Status, IdUser = aggregate.IdUser, IdBooking = aggregate.IdBooking, StartBooking = aggregate.StartBooking, EndBooking = aggregate.EndBooking, CreationBooking = aggregate.CreationBooking }; } } }
+using BookingService.Booking.AppServices.Bookings; using BookingService.Booking.Domain.Bookings; namespace BookingService.Booking.AppServices; public static class BookingAggregateExtension { public static BookingData ToBookingData(this BookingAggregate? aggregate) { return new BookingData { Id = aggregate.Id, Status = aggregate.Status, IdUser = aggregate.IdUser, IdBooking = aggregate.IdBooking, StartBooking = aggregate.StartBooking, EndBooking = aggregate.EndBooking, CreationBooking = aggregate.CreationBooking }; } }
 ```
 
 # BookingService.Booking.AppServices\Bookings\BookingData.cs
 
 ```cs
-using BookingService.Booking.Domain.Contracts.Bookings; namespace BookingService.Booking.AppServices.Bookings { public class BookingData { public long Id; public BookingStatus Status; public long IdUser; public long IdBooking; public DateOnly StartBooking; public DateOnly EndBooking; public DateTimeOffset CreationBooking; } }
+using BookingService.Booking.Domain.Contracts.Bookings; namespace BookingService.Booking.AppServices.Bookings; public class BookingData { public DateTimeOffset CreationBooking; public DateOnly EndBooking; public long Id; public long IdBooking; public long IdUser; public DateOnly StartBooking; public BookingStatus Status; }
 ```
 
 # BookingService.Booking.AppServices\Bookings\BookingService.cs
 
 ```cs
-using BookingService.Booking.AppServices.Dates; using BookingService.Booking.AppServices.Queries; using BookingService.Booking.Domain; using BookingService.Booking.Domain.Bookings; namespace BookingService.Booking.AppServices.Bookings { internal class BookingService : IBookingsService { private readonly IUnitOfWork _unitOfWork; private readonly IBookingsRepository _bookingsRepository; private readonly ICurrentDateTimeProvider _currentDateTimeProvider; public BookingService(IUnitOfWork unitOfWork, ICurrentDateTimeProvider timeProvider) { _unitOfWork = unitOfWork; _bookingsRepository = _unitOfWork.BookingsRepository; _currentDateTimeProvider = timeProvider; } public async Task<long> Create(CreateBookingQuery createBooking) { var aggregate = BookingAggregate.Initialize( createBooking.IdUser, createBooking.IdBooking, createBooking.StartBooking, createBooking.EndBooking, _currentDateTimeProvider.UtcNow); _bookingsRepository.Create(aggregate); await _unitOfWork.CommitAsync(); return aggregate.Id; } public async Task<BookingData> GetById(long id) { return _bookingsRepository.GetById(id).Result.ToBookingData(); } public async Task Cancel(long id) { var aggregate = _unitOfWork.BookingsRepository.GetById(id).Result; aggregate.Cancel(); _bookingsRepository.Update(aggregate); await _unitOfWork.CommitAsync(); } } }
+using BookingService.Booking.AppServices.Dates; using BookingService.Booking.AppServices.Queries; using BookingService.Booking.Domain; using BookingService.Booking.Domain.Bookings; namespace BookingService.Booking.AppServices.Bookings; internal class BookingService : IBookingsService { private readonly IBookingsRepository _bookingsRepository; private readonly ICurrentDateTimeProvider _currentDateTimeProvider; private readonly IUnitOfWork _unitOfWork; public BookingService(IUnitOfWork unitOfWork, ICurrentDateTimeProvider timeProvider) { _unitOfWork = unitOfWork; _bookingsRepository = _unitOfWork.BookingsRepository; _currentDateTimeProvider = timeProvider; } public async Task<long> Create(CreateBookingQuery createBooking) { var aggregate = BookingAggregate.Initialize( createBooking.IdUser, createBooking.IdBooking, createBooking.StartBooking, createBooking.EndBooking, _currentDateTimeProvider.UtcNow); _bookingsRepository.Create(aggregate); await _unitOfWork.CommitAsync(); return aggregate.Id; } public async Task<BookingData> GetById(long id) { return _bookingsRepository.GetById(id).Result.ToBookingData(); } public async Task Cancel(long id) { var aggregate = _unitOfWork.BookingsRepository.GetById(id).Result; aggregate.Cancel(); _bookingsRepository.Update(aggregate); await _unitOfWork.CommitAsync(); } }
 ```
 
 # BookingService.Booking.AppServices\Bookings\IBookingsService.cs
 
 ```cs
-using BookingService.Booking.AppServices.Queries; namespace BookingService.Booking.AppServices.Bookings { public interface IBookingsService { Task<long> Create(CreateBookingQuery createBooking); Task<BookingData> GetById(long id); Task Cancel(long id); } }
+using BookingService.Booking.AppServices.Queries; namespace BookingService.Booking.AppServices.Bookings; public interface IBookingsService { Task<long> Create(CreateBookingQuery createBooking); Task<BookingData> GetById(long id); Task Cancel(long id); }
 ```
 
 # BookingService.Booking.AppServices\Bookings\ServiceCollectionExtensions.cs
@@ -85,43 +85,43 @@ using BookingService.Booking.AppServices.Dates; using Microsoft.Extensions.Depen
 # BookingService.Booking.AppServices\Dates\DefaultCurrentDateTimeProvider.cs
 
 ```cs
-namespace BookingService.Booking.AppServices.Dates { public class DefaultCurrentDateTimeProvider : ICurrentDateTimeProvider { public DateTimeOffset Now => DateTimeOffset.Now.ToLocalTime(); public DateTimeOffset UtcNow => DateTimeOffset.UtcNow; } }
+namespace BookingService.Booking.AppServices.Dates; public class DefaultCurrentDateTimeProvider : ICurrentDateTimeProvider { public DateTimeOffset Now => DateTimeOffset.Now.ToLocalTime(); public DateTimeOffset UtcNow => DateTimeOffset.UtcNow; }
 ```
 
 # BookingService.Booking.AppServices\Dates\ICurrentDateTimeProvider.cs
 
 ```cs
-namespace BookingService.Booking.AppServices.Dates { public interface ICurrentDateTimeProvider { public DateTimeOffset Now { get; } public DateTimeOffset UtcNow { get; } } }
+namespace BookingService.Booking.AppServices.Dates; public interface ICurrentDateTimeProvider { public DateTimeOffset Now { get; } public DateTimeOffset UtcNow { get; } }
 ```
 
 # BookingService.Booking.AppServices\Exceptions\ValidationException.cs
 
 ```cs
-namespace BookingService.Booking.AppServices.Exceptions { public class ValidationException : Exception { public ValidationException() { } public ValidationException(string str) : base(str) { } } }
+namespace BookingService.Booking.AppServices.Exceptions; public class ValidationException : Exception { public ValidationException() { } public ValidationException(string str) : base(str) { } }
 ```
 
 # BookingService.Booking.AppServices\Options\BookingCatalogRestOptions.cs
 
 ```cs
-using System; using System.Collections.Generic; using System.Linq; using System.Text; using System.Threading.Tasks; namespace BookingService.Booking.AppServices.Options { public class BookingCatalogRestOptions { public string BaseAddress { get; set; } } }
+namespace BookingService.Booking.AppServices.Options; public class BookingCatalogRestOptions { public string BaseAddress { get; set; } }
 ```
 
 # BookingService.Booking.AppServices\Queries\CreateBookingQuery.cs
 
 ```cs
-namespace BookingService.Booking.AppServices.Queries { public class CreateBookingQuery { public long IdUser { get; set; } public long IdBooking { get; set; } public DateOnly StartBooking { get; set; } public DateOnly EndBooking { get; set; } } }
+namespace BookingService.Booking.AppServices.Queries; public class CreateBookingQuery { public long IdUser { get; set; } public long IdBooking { get; set; } public DateOnly StartBooking { get; set; } public DateOnly EndBooking { get; set; } }
 ```
 
 # BookingService.Booking.AppServices\Queries\GetBookingsByFilterQuery.cs
 
 ```cs
-using BookingService.Booking.Domain.Contracts.Bookings; namespace BookingService.Booking.AppServices.Queries { public class GetBookingsByFilterQuery { public long? Id { get; set; } public BookingStatus? Status { get; set; } public long? IdUser { get; set; } public long? IdBooking { get; set; } public DateOnly? StartBooking { get; set; } public DateOnly? EndBooking { get; set; } public DateTimeOffset? CreationBooking { get; set; } } }
+using BookingService.Booking.Domain.Contracts.Bookings; namespace BookingService.Booking.AppServices.Queries; public class GetBookingsByFilterQuery { public long? Id { get; set; } public BookingStatus? Status { get; set; } public long? IdUser { get; set; } public long? IdBooking { get; set; } public DateOnly? StartBooking { get; set; } public DateOnly? EndBooking { get; set; } public DateTimeOffset? CreationBooking { get; set; } }
 ```
 
 # BookingService.Booking.Domain.Contracts\Bookings\EnumBookingData.cs
 
 ```cs
-namespace BookingService.Booking.Domain.Contracts.Bookings { public enum BookingStatus { AwaitsConfirmation, Confirmed, Cancelled } }
+namespace BookingService.Booking.Domain.Contracts.Bookings; public enum BookingStatus { AwaitsConfirmation, Confirmed, Cancelled }
 ```
 
 # BookingService.Booking.Domain.Contracts\BookingService.Booking.Domain.Contracts.csproj
@@ -133,13 +133,13 @@ namespace BookingService.Booking.Domain.Contracts.Bookings { public enum Booking
 # BookingService.Booking.Domain\Bookings\BookingAggregate.cs
 
 ```cs
-using BookingService.Booking.Domain.Contracts.Bookings; using BookingService.Booking.Domain.Exceptions; namespace BookingService.Booking.Domain.Bookings { public class BookingAggregate { public Guid? CatalogRequestId { get; private set; } public long Id { get; set; } public BookingStatus Status { get; private set; } public long IdUser { get; private set; } public long IdBooking { get; private set; } public DateOnly StartBooking { get; private set; } public DateOnly EndBooking { get; private set; } public DateTimeOffset CreationBooking { get; private set; } public BookingAggregate() { } private BookingAggregate(long idUser, long idBooking, DateOnly startBooking, DateOnly endBooking, DateTimeOffset creationBooking) { Status = BookingStatus.AwaitsConfirmation; IdUser = idUser; IdBooking = idBooking; StartBooking = startBooking; EndBooking = endBooking; CreationBooking = creationBooking; } public void SetCatalogRequestId(Guid catalogRequestId) { if (catalogRequestId == default) throw new DomainException(); if (CatalogRequestId == null) CatalogRequestId = catalogRequestId; else throw new DomainException(); } public static BookingAggregate Initialize(long idUser, long idBooking, DateOnly startBooking, DateOnly endBooking, DateTimeOffset creationBooking) { if (idUser <= 0 || idBooking <= 0) throw new DomainException("Id должен быть больше нуля"); if (startBooking.CompareTo(DateOnly.FromDateTime(creationBooking.DateTime)) <= 0) throw new DomainException("Начало бронирования должно быть после текущей даты"); if (endBooking.CompareTo(startBooking) <= 0) throw new DomainException("Окончание бронирования должно быть после начала бронирования"); return new BookingAggregate(idUser, idBooking, startBooking, endBooking, creationBooking); } public void Confirm() { if (Status == BookingStatus.Confirmed) throw new DomainException("Статус уже подтверждён"); if (Status == BookingStatus.Cancelled) throw new DomainException("Статус уже отменён"); if (Status == BookingStatus.AwaitsConfirmation) Status = BookingStatus.Confirmed; } public void Cancel() { if (Status == BookingStatus.Cancelled) throw new DomainException("Статус уже отменён"); Status = BookingStatus.Cancelled; } } }
+using BookingService.Booking.Domain.Contracts.Bookings; using BookingService.Booking.Domain.Exceptions; namespace BookingService.Booking.Domain.Bookings; public class BookingAggregate { public BookingAggregate() { } private BookingAggregate(long idUser, long idBooking, DateOnly startBooking, DateOnly endBooking, DateTimeOffset creationBooking) { Status = BookingStatus.AwaitsConfirmation; IdUser = idUser; IdBooking = idBooking; StartBooking = startBooking; EndBooking = endBooking; CreationBooking = creationBooking; } public long Id { get; set; } public BookingStatus Status { get; private set; } public long IdUser { get; private set; } public long IdBooking { get; private set; } public DateOnly StartBooking { get; private set; } public DateOnly EndBooking { get; private set; } public DateTimeOffset CreationBooking { get; private set; } public static BookingAggregate Initialize(long idUser, long idBooking, DateOnly startBooking, DateOnly endBooking, DateTimeOffset creationBooking) { if (idUser <= 0 || idBooking <= 0) throw new DomainException("Id должен быть больше нуля"); if (startBooking.CompareTo(DateOnly.FromDateTime(creationBooking.DateTime)) <= 0) throw new DomainException("Начало бронирования должно быть после текущей даты"); if (endBooking.CompareTo(startBooking) <= 0) throw new DomainException("Окончание бронирования должно быть после начала бронирования"); return new BookingAggregate(idUser, idBooking, startBooking, endBooking, creationBooking); } public void Confirm() { if (Status == BookingStatus.Confirmed) throw new DomainException("Статус уже подтверждён"); if (Status == BookingStatus.Cancelled) throw new DomainException("Статус уже отменён"); if (Status == BookingStatus.AwaitsConfirmation) Status = BookingStatus.Confirmed; } public void Cancel() { if (Status == BookingStatus.Cancelled) throw new DomainException("Статус уже отменён"); Status = BookingStatus.Cancelled; } }
 ```
 
 # BookingService.Booking.Domain\Bookings\IBookingsRepository.cs
 
 ```cs
-namespace BookingService.Booking.Domain.Bookings { public interface IBookingsRepository { public void Create(BookingAggregate aggregate); public ValueTask<BookingAggregate?> GetById(long id, CancellationToken token = default); public void Update(BookingAggregate aggregate); } }
+namespace BookingService.Booking.Domain.Bookings; public interface IBookingsRepository { public void Create(BookingAggregate aggregate); public ValueTask<BookingAggregate?> GetById(long id, CancellationToken token = default); public void Update(BookingAggregate aggregate); }
 ```
 
 # BookingService.Booking.Domain\BookingService.Booking.Domain.csproj
@@ -151,13 +151,13 @@ namespace BookingService.Booking.Domain.Bookings { public interface IBookingsRep
 # BookingService.Booking.Domain\Exceptions\DomainException.cs
 
 ```cs
-namespace BookingService.Booking.Domain.Exceptions { public class DomainException : Exception { public DomainException() { } public DomainException(string str) : base(str) { } } }
+namespace BookingService.Booking.Domain.Exceptions; public class DomainException : Exception { public DomainException() { } public DomainException(string str) : base(str) { } }
 ```
 
 # BookingService.Booking.Domain\IUnitOfWork.cs
 
 ```cs
-using BookingService.Booking.Domain.Bookings; namespace BookingService.Booking.Domain { public interface IUnitOfWork { public IBookingsRepository BookingsRepository { get; } Task CommitAsync(CancellationToken cancellationToken = default); } }
+using BookingService.Booking.Domain.Bookings; namespace BookingService.Booking.Domain; public interface IUnitOfWork { public IBookingsRepository BookingsRepository { get; } Task CommitAsync(CancellationToken cancellationToken = default); }
 ```
 
 # BookingService.Booking.Host\.vs\BookingService.Booking.Host\DesignTimeBuild\.dtbcache.v2
@@ -199,7 +199,7 @@ This is a binary file of the type: Binary
 # BookingService.Booking.Host\Controllers\BookingsController.cs
 
 ```cs
-using BookingService.Booking.Api.Contracts.Bookings; using BookingService.Booking.Api.Contracts.Bookings.Requests; using BookingService.Booking.AppServices.Bookings; using BookingService.Booking.AppServices.Contracts; using BookingService.Booking.Host.Mapping; using Microsoft.AspNetCore.Mvc; namespace BookingService.Booking.Host.Controllers { [ApiController] public class BookingsController : ControllerBase { private IBookingsService _bookingsService; private IBookingsQueries _bookingsQueries; public BookingsController(IBookingsService bookingsService, IBookingsQueries bookingsQueries) { _bookingsService = bookingsService; _bookingsQueries = bookingsQueries; } [HttpPost] [Route(WebRoutes.Create)] public async Task<long> CreateBooking([FromBody] CreateBookingRequest createBookingRequest) { return await _bookingsService.Create(createBookingRequest.ToQuery()); } [HttpGet] [Route(WebRoutes.GetByFilter)] public async Task<BookingData[]> GetBookingsByFilter([FromQuery] GetBookingsByFilterRequest getBookingsByFilter) { return await _bookingsQueries.GetByFilter(getBookingsByFilter.ToQuery()); } [HttpPost] [Route(WebRoutes.Cancel)] public async Task CancelBooking([FromBody] long id) { await _bookingsService.Cancel(id); } [HttpGet] [Route(WebRoutes.GetById)] public async Task<BookingData> GetBookingById([FromRoute] long id) { return await _bookingsService.GetById(id); } [HttpGet] [Route(WebRoutes.GetStatusById)] public async Task<string> GetBookingStatusById([FromRoute] long id) { return await _bookingsQueries.GetStatusById(id); } } }
+using BookingService.Booking.Api.Contracts.Bookings; using BookingService.Booking.Api.Contracts.Bookings.Requests; using BookingService.Booking.AppServices.Bookings; using BookingService.Booking.AppServices.Contracts; using BookingService.Booking.Host.Mapping; using Microsoft.AspNetCore.Mvc; namespace BookingService.Booking.Host.Controllers; [ApiController] public class BookingsController : ControllerBase { private readonly IBookingsQueries _bookingsQueries; private readonly IBookingsService _bookingsService; public BookingsController(IBookingsService bookingsService, IBookingsQueries bookingsQueries) { _bookingsService = bookingsService; _bookingsQueries = bookingsQueries; } [HttpPost] [Route(WebRoutes.Create)] public async Task<long> CreateBooking([FromBody] CreateBookingRequest createBookingRequest) { return await _bookingsService.Create(createBookingRequest.ToQuery()); } [HttpGet] [Route(WebRoutes.GetByFilter)] public async Task<BookingData[]> GetBookingsByFilter([FromQuery] GetBookingsByFilterRequest getBookingsByFilter) { return await _bookingsQueries.GetByFilter(getBookingsByFilter.ToQuery()); } [HttpPost] [Route(WebRoutes.Cancel)] public async Task CancelBooking([FromBody] long id) { await _bookingsService.Cancel(id); } [HttpGet] [Route(WebRoutes.GetById)] public async Task<BookingData> GetBookingById([FromRoute] long id) { return await _bookingsService.GetById(id); } [HttpGet] [Route(WebRoutes.GetStatusById)] public async Task<string> GetBookingStatusById([FromRoute] long id) { return await _bookingsQueries.GetStatusById(id); } }
 ```
 
 # BookingService.Booking.Host\Dockerfile
@@ -211,13 +211,13 @@ using BookingService.Booking.Api.Contracts.Bookings; using BookingService.Bookin
 # BookingService.Booking.Host\HostBuilderFactory.cs
 
 ```cs
-using Serilog; namespace BookingService.Booking.Host { public static class HostBuilderFactory { public static IHost BuildHost(string[] args) { return Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder(args) .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); }) .UseSerilog() // Подключение Serilog .Build(); } } }
+using Serilog; namespace BookingService.Booking.Host; public static class HostBuilderFactory { public static IHost BuildHost(string[] args) { return Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder(args) .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); }) .UseSerilog() // Подключение Serilog .Build(); } }
 ```
 
 # BookingService.Booking.Host\Mapping\BookingMappings.cs
 
 ```cs
-using BookingService.Booking.Api.Contracts.Bookings.Requests; using BookingService.Booking.AppServices.Queries; namespace BookingService.Booking.Host.Mapping { public static class BookingMappings { public static CreateBookingQuery ToQuery(this CreateBookingRequest request) => new CreateBookingQuery { IdUser = request.IdUser, IdBooking = request.IdBooking, StartBooking = request.StartBooking, EndBooking = request.EndBooking, }; public static GetBookingsByFilterQuery ToQuery(this GetBookingsByFilterRequest request) => new GetBookingsByFilterQuery { Id = request.Id, IdUser = request.IdUser, IdBooking = request.IdBooking, Status = request.Status, CreationBooking = request.CreationBooking, StartBooking = request.StartBooking, EndBooking = request.EndBooking }; } }
+using BookingService.Booking.Api.Contracts.Bookings.Requests; using BookingService.Booking.AppServices.Queries; namespace BookingService.Booking.Host.Mapping; public static class BookingMappings { public static CreateBookingQuery ToQuery(this CreateBookingRequest request) { return new CreateBookingQuery { IdUser = request.IdUser, IdBooking = request.IdBooking, StartBooking = request.StartBooking, EndBooking = request.EndBooking }; } public static GetBookingsByFilterQuery ToQuery(this GetBookingsByFilterRequest request) { return new GetBookingsByFilterQuery { Id = request.Id, IdUser = request.IdUser, IdBooking = request.IdBooking, Status = request.Status, CreationBooking = request.CreationBooking, StartBooking = request.StartBooking, EndBooking = request.EndBooking }; } }
 ```
 
 # BookingService.Booking.Host\Program.cs
@@ -235,7 +235,7 @@ using BookingService.Booking.Api.Contracts.Bookings.Requests; using BookingServi
 # BookingService.Booking.Host\Startup.cs
 
 ```cs
-using BookingService.Booking.AppServices.Bookings; using BookingService.Booking.AppServices.Exceptions; using BookingService.Booking.Domain.Exceptions; using BookingService.Booking.Persistence; using Hellang.Middleware.ProblemDetails; using Microsoft.AspNetCore.Mvc; using Microsoft.OpenApi.Models; namespace BookingService.Booking.Host { public class Startup { private readonly IConfiguration _configuration; public Startup(IConfiguration configuration) { _configuration = configuration; } // Настройка сервисов public void ConfigureServices(IServiceCollection services) { // Регистрация сервисов в DI-контейнере services.AddControllers(); // Добавление Swagger services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo { Title = "Booking Service API", Version = "v1", Description = "API для сервиса бронирования" }); }); services.AddAppServices(); services.AddPersistence(_configuration.GetConnectionString("BookingsContext")); services.AddProblemDetails(options => { // Если окружение Development, включаем подробное описание ошибки в ответ. options.IncludeExceptionDetails = (context, _) => { var env = context.RequestServices.GetRequiredService<IWebHostEnvironment>(); return env.IsDevelopment(); }; options.Map<DomainException>(ex => new ProblemDetails { Status = 402, Type = $"https://httpstatuses.com/{402}", Title = ex.Message, Detail = ex.StackTrace }); options.Map<ValidationException>(ex => new ProblemDetails { Status = 400, Type = $"https://httpstatuses.com/{400}", Title = ex.Message, }); }); } // Настройка middleware public void Configure(IApplicationBuilder app, IWebHostEnvironment env) { if (env.IsDevelopment()) { app.UseDeveloperExceptionPage(); app.UseSwagger(); app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "Booking Service API V1"); }); } app.UseRouting(); app.UseEndpoints(endpoints => { endpoints.MapControllers(); }); app.UseProblemDetails(); } } }
+using BookingService.Booking.AppServices.Bookings; using BookingService.Booking.AppServices.Exceptions; using BookingService.Booking.Domain.Exceptions; using BookingService.Booking.Persistence; using Hellang.Middleware.ProblemDetails; using Microsoft.AspNetCore.Mvc; using Microsoft.OpenApi.Models; namespace BookingService.Booking.Host; public class Startup { private readonly IConfiguration _configuration; public Startup(IConfiguration configuration) { _configuration = configuration; } // Настройка сервисов public void ConfigureServices(IServiceCollection services) { // Регистрация сервисов в DI-контейнере services.AddControllers(); // Добавление Swagger services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo { Title = "Booking Service API", Version = "v1", Description = "API для сервиса бронирования" }); }); services.AddAppServices(); services.AddPersistence(_configuration.GetConnectionString("BookingsContext")); services.AddProblemDetails(options => { // Если окружение Development, включаем подробное описание ошибки в ответ. options.IncludeExceptionDetails = (context, _) => { var env = context.RequestServices.GetRequiredService<IWebHostEnvironment>(); return env.IsDevelopment(); }; options.Map<DomainException>(ex => new ProblemDetails { Status = 402, Type = $"https://httpstatuses.com/{402}", Title = ex.Message, Detail = ex.StackTrace }); options.Map<ValidationException>(ex => new ProblemDetails { Status = 400, Type = $"https://httpstatuses.com/{400}", Title = ex.Message }); }); } // Настройка middleware public void Configure(IApplicationBuilder app, IWebHostEnvironment env) { if (env.IsDevelopment()) { app.UseDeveloperExceptionPage(); app.UseSwagger(); app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "Booking Service API V1"); }); } app.UseRouting(); app.UseEndpoints(endpoints => { endpoints.MapControllers(); }); app.UseProblemDetails(); } }
 ```
 
 # BookingService.Booking.Persistence\appsettings.json
@@ -247,13 +247,13 @@ using BookingService.Booking.AppServices.Bookings; using BookingService.Booking.
 # BookingService.Booking.Persistence\BookingQueries.cs
 
 ```cs
-using BookingService.Booking.AppServices; using BookingService.Booking.AppServices.Bookings; using BookingService.Booking.AppServices.Contracts; using BookingService.Booking.AppServices.Queries; using BookingService.Booking.Domain.Bookings; using Microsoft.EntityFrameworkCore; namespace BookingService.Booking.Persistence { internal class BookingQueries : IBookingsQueries { private readonly BookingsContext _context; public BookingQueries(BookingsContext context) { _context = context; } public async Task<BookingData[]> GetByFilter(GetBookingsByFilterQuery getBookingsByFilter) { var bookingsQuery = _context.Bookings.AsQueryable(); if (getBookingsByFilter.Id.HasValue) bookingsQuery = bookingsQuery .Where(x => x.Id == getBookingsByFilter.Id.Value); if (getBookingsByFilter.Status.HasValue) bookingsQuery = bookingsQuery .Where(x => x.Status == getBookingsByFilter.Status.Value); if (getBookingsByFilter.IdUser.HasValue) bookingsQuery = bookingsQuery .Where(x => x.IdUser == getBookingsByFilter.IdUser.Value); if (getBookingsByFilter.IdBooking.HasValue) bookingsQuery = bookingsQuery .Where(x => x.IdBooking == getBookingsByFilter.IdBooking.Value); if (getBookingsByFilter.StartBooking.HasValue) bookingsQuery = bookingsQuery .Where(x => x.StartBooking == getBookingsByFilter.StartBooking.Value); if (getBookingsByFilter.EndBooking.HasValue) bookingsQuery = bookingsQuery .Where(x => x.EndBooking == getBookingsByFilter.EndBooking.Value); if (getBookingsByFilter.CreationBooking.HasValue) bookingsQuery = bookingsQuery .Where(x => x.CreationBooking == getBookingsByFilter.CreationBooking.Value); return await bookingsQuery.Select(x => x.ToBookingData()).ToArrayAsync(); } public async Task<string> GetStatusById(long id) { var booking = await _context.FindAsync<BookingAggregate>(id); return booking.Status.ToString(); } } }
+using BookingService.Booking.AppServices; using BookingService.Booking.AppServices.Bookings; using BookingService.Booking.AppServices.Contracts; using BookingService.Booking.AppServices.Queries; using BookingService.Booking.Domain.Bookings; using Microsoft.EntityFrameworkCore; namespace BookingService.Booking.Persistence; internal class BookingQueries : IBookingsQueries { private readonly BookingsContext _context; public BookingQueries(BookingsContext context) { _context = context; } public async Task<BookingData[]> GetByFilter(GetBookingsByFilterQuery getBookingsByFilter) { var bookingsQuery = _context.Bookings.AsQueryable(); if (getBookingsByFilter.Id.HasValue) bookingsQuery = bookingsQuery .Where(x => x.Id == getBookingsByFilter.Id.Value); if (getBookingsByFilter.Status.HasValue) bookingsQuery = bookingsQuery .Where(x => x.Status == getBookingsByFilter.Status.Value); if (getBookingsByFilter.IdUser.HasValue) bookingsQuery = bookingsQuery .Where(x => x.IdUser == getBookingsByFilter.IdUser.Value); if (getBookingsByFilter.IdBooking.HasValue) bookingsQuery = bookingsQuery .Where(x => x.IdBooking == getBookingsByFilter.IdBooking.Value); if (getBookingsByFilter.StartBooking.HasValue) bookingsQuery = bookingsQuery .Where(x => x.StartBooking == getBookingsByFilter.StartBooking.Value); if (getBookingsByFilter.EndBooking.HasValue) bookingsQuery = bookingsQuery .Where(x => x.EndBooking == getBookingsByFilter.EndBooking.Value); if (getBookingsByFilter.CreationBooking.HasValue) bookingsQuery = bookingsQuery .Where(x => x.CreationBooking == getBookingsByFilter.CreationBooking.Value); return await bookingsQuery.Select(x => x.ToBookingData()).ToArrayAsync(); } public async Task<string> GetStatusById(long id) { var booking = await _context.FindAsync<BookingAggregate>(id); return booking.Status.ToString(); } }
 ```
 
 # BookingService.Booking.Persistence\BookingsContext.cs
 
 ```cs
-using BookingService.Booking.Domain.Bookings; using BookingService.Booking.Persistence.Configurations; using Microsoft.EntityFrameworkCore; namespace BookingService.Booking.Persistence { public class BookingsContext : DbContext { public DbSet<BookingAggregate> Bookings { get; set; } public BookingsContext(DbContextOptions<BookingsContext> options) : base(options) { } protected override void OnModelCreating(ModelBuilder modelBuilder) { modelBuilder.ApplyConfiguration<BookingAggregate>(new BookingAggregateConfiguration()); base.OnModelCreating(modelBuilder); } } }
+using BookingService.Booking.Domain.Bookings; using BookingService.Booking.Persistence.Configurations; using Microsoft.EntityFrameworkCore; namespace BookingService.Booking.Persistence; public class BookingsContext : DbContext { public BookingsContext(DbContextOptions<BookingsContext> options) : base(options) { } public DbSet<BookingAggregate> Bookings { get; set; } protected override void OnModelCreating(ModelBuilder modelBuilder) { modelBuilder.ApplyConfiguration(new BookingAggregateConfiguration()); base.OnModelCreating(modelBuilder); } }
 ```
 
 # BookingService.Booking.Persistence\BookingService.Booking.Persistence.csproj
@@ -265,25 +265,25 @@ using BookingService.Booking.Domain.Bookings; using BookingService.Booking.Persi
 # BookingService.Booking.Persistence\BookingsRepository.cs
 
 ```cs
-using BookingService.Booking.Domain.Bookings; using Microsoft.EntityFrameworkCore; namespace BookingService.Booking.Persistence { public class BookingsRepository : IBookingsRepository { private DbSet<BookingAggregate> _dbset; public BookingsRepository(BookingsContext context) { _dbset = context.Bookings; } public void Create(BookingAggregate aggregate) { _dbset.Add(aggregate); } public async ValueTask<BookingAggregate?> GetById(long id, CancellationToken token = default) { return await _dbset.FindAsync(id, token); } public void Update(BookingAggregate aggregate) { _dbset.Attach(aggregate); _dbset.Entry(aggregate).State = EntityState.Modified; } } }
+using BookingService.Booking.Domain.Bookings; using Microsoft.EntityFrameworkCore; namespace BookingService.Booking.Persistence; public class BookingsRepository : IBookingsRepository { private readonly DbSet<BookingAggregate> _dbset; public BookingsRepository(BookingsContext context) { _dbset = context.Bookings; } public void Create(BookingAggregate aggregate) { _dbset.Add(aggregate); } public async ValueTask<BookingAggregate?> GetById(long id, CancellationToken token = default) { return await _dbset.FindAsync(id, token); } public void Update(BookingAggregate aggregate) { _dbset.Attach(aggregate); _dbset.Entry(aggregate).State = EntityState.Modified; } }
 ```
 
 # BookingService.Booking.Persistence\Class1.cs
 
 ```cs
-namespace BookingService.Booking.Persistence { public class Class1 { } }
+namespace BookingService.Booking.Persistence; public class Class1 { }
 ```
 
 # BookingService.Booking.Persistence\Configurations\BookingAggregateConfiguration.cs
 
 ```cs
-using BookingService.Booking.Domain.Bookings; using Microsoft.EntityFrameworkCore; using Microsoft.EntityFrameworkCore.Metadata.Builders; namespace BookingService.Booking.Persistence.Configurations; public class BookingAggregateConfiguration : IEntityTypeConfiguration<BookingAggregate> { public void Configure(EntityTypeBuilder<BookingAggregate> builder) { builder.ToTable("bookings"); builder.HasKey(x => x.Id) .HasName("pk_bookings"); builder.Property(x => x.Id) .HasColumnName("id") .HasColumnType("bigint"); builder.Property(x => x.Status) .HasColumnName("status") .HasColumnType("int"); builder.Property(x => x.IdUser) .HasColumnName("user_id") .HasColumnType("bigint"); builder.Property(x => x.IdBooking) .HasColumnName("resource_id") .HasColumnType("bigint"); builder.Property(x => x.StartBooking) .HasColumnName("start_date") .HasColumnType("date"); builder.Property(x => x.EndBooking) .HasColumnName("end_date") .HasColumnType("date"); builder.Property(x => x.CreationBooking) .HasColumnName("created_at_date_time") .HasColumnType("timestamptz"); } }
+using BookingService.Booking.Domain.Bookings; using Microsoft.EntityFrameworkCore; using Microsoft.EntityFrameworkCore.Metadata.Builders; namespace BookingService.Booking.Persistence.Configurations; public class BookingAggregateConfiguration : IEntityTypeConfiguration<BookingAggregate> { public void Configure(EntityTypeBuilder<BookingAggregate> builder) { builder.ToTable("bookings"); builder.HasKey(x => x.Id); builder.Property(x => x.Id) .HasColumnName("id") .HasColumnType("bigint"); builder.Property(x => x.Status) .HasColumnName("status") .HasColumnType("int"); builder.Property(x => x.IdUser) .HasColumnName("user_id") .HasColumnType("bigint"); builder.Property(x => x.IdBooking) .HasColumnName("resource_id") .HasColumnType("bigint"); builder.Property(x => x.StartBooking) .HasColumnName("start_date") .HasColumnType("date"); builder.Property(x => x.EndBooking) .HasColumnName("end_date") .HasColumnType("date"); builder.Property(x => x.CreationBooking) .HasColumnName("created_at_date_time") .HasColumnType("timestamptz"); } }
 ```
 
 # BookingService.Booking.Persistence\DesignTimeDbContextFactory.cs
 
 ```cs
-using Microsoft.EntityFrameworkCore; using Microsoft.EntityFrameworkCore.Design; using Microsoft.Extensions.Configuration; namespace BookingService.Booking.Persistence { public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<BookingsContext> { public BookingsContext CreateDbContext(string[] args) { var optionsBuilder = new DbContextOptionsBuilder<BookingsContext>(); var configuration = new ConfigurationBuilder() .SetBasePath(AppDomain.CurrentDomain.BaseDirectory) .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true) .Build(); var connectionString = configuration.GetConnectionString(nameof(BookingsContext)); if (string.IsNullOrWhiteSpace(connectionString)) throw new InvalidOperationException($"ConnectionString for `{nameof(BookingsContext)}` not found"); optionsBuilder.UseNpgsql(connectionString); return new BookingsContext(optionsBuilder.Options); } } }
+using Microsoft.EntityFrameworkCore; using Microsoft.EntityFrameworkCore.Design; using Microsoft.Extensions.Configuration; namespace BookingService.Booking.Persistence; public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<BookingsContext> { public BookingsContext CreateDbContext(string[] args) { var optionsBuilder = new DbContextOptionsBuilder<BookingsContext>(); var configuration = new ConfigurationBuilder() .SetBasePath(AppDomain.CurrentDomain.BaseDirectory) .AddJsonFile("appsettings.json", false, true) .Build(); var connectionString = configuration.GetConnectionString(nameof(BookingsContext)); if (string.IsNullOrWhiteSpace(connectionString)) throw new InvalidOperationException($"ConnectionString for `{nameof(BookingsContext)}` not found"); optionsBuilder.UseNpgsql(connectionString); return new BookingsContext(optionsBuilder.Options); } }
 ```
 
 # BookingService.Booking.Persistence\Migrations\20250611221234_InitialMigration.cs
@@ -307,12 +307,12 @@ using Microsoft.EntityFrameworkCore.Migrations; using Npgsql.EntityFrameworkCore
 # BookingService.Booking.Persistence\ServiceCollectionExtensions.cs
 
 ```cs
-using BookingService.Booking.AppServices.Contracts; using BookingService.Booking.Domain; using BookingService.Booking.Domain.Bookings; using Microsoft.EntityFrameworkCore; using Microsoft.Extensions.DependencyInjection; using Microsoft.Extensions.Logging; namespace BookingService.Booking.Persistence { public static class ServiceCollectionExtensions { public static IServiceCollection AddPersistence(this IServiceCollection services, string connectionString) { if (services == null) throw new ArgumentNullException(nameof(services)); if (string.IsNullOrWhiteSpace(connectionString)) throw new ArgumentNullException(nameof(connectionString)); services.AddScoped<IBookingsRepository, BookingsRepository>(); services.AddScoped<IUnitOfWork, UnitOfWork>(); services.AddScoped<IBookingsQueries, BookingQueries>(); services.AddDbContext<BookingsContext>( (ctx, context) => { context.UseNpgsql(connectionString) .UseLoggerFactory(ctx.GetRequiredService<ILoggerFactory>()); } ); return services; } } }
+using BookingService.Booking.AppServices.Contracts; using BookingService.Booking.Domain; using BookingService.Booking.Domain.Bookings; using Microsoft.EntityFrameworkCore; using Microsoft.Extensions.DependencyInjection; using Microsoft.Extensions.Logging; namespace BookingService.Booking.Persistence; public static class ServiceCollectionExtensions { public static IServiceCollection AddPersistence(this IServiceCollection services, string connectionString) { if (services == null) throw new ArgumentNullException(nameof(services)); if (string.IsNullOrWhiteSpace(connectionString)) throw new ArgumentNullException(nameof(connectionString)); services.AddScoped<IBookingsRepository, BookingsRepository>(); services.AddScoped<IUnitOfWork, UnitOfWork>(); services.AddScoped<IBookingsQueries, BookingQueries>(); services.AddDbContext<BookingsContext>((ctx, context) => { context.UseNpgsql(connectionString) .UseLoggerFactory(ctx.GetRequiredService<ILoggerFactory>()); } ); return services; } }
 ```
 
 # BookingService.Booking.Persistence\UnitOfWork.cs
 
 ```cs
-using BookingService.Booking.Domain; using BookingService.Booking.Domain.Bookings; namespace BookingService.Booking.Persistence { public class UnitOfWork : IUnitOfWork { private readonly BookingsContext _dbContext; public IBookingsRepository BookingsRepository { get; } public UnitOfWork(BookingsContext dbContext, IBookingsRepository bookingsRepository) { _dbContext = dbContext; BookingsRepository = bookingsRepository; } public async Task CommitAsync(CancellationToken cancellationToken = default) { await _dbContext.SaveChangesAsync(cancellationToken); } } }
+using BookingService.Booking.Domain; using BookingService.Booking.Domain.Bookings; namespace BookingService.Booking.Persistence; public class UnitOfWork : IUnitOfWork { private readonly BookingsContext _dbContext; public UnitOfWork(BookingsContext dbContext, IBookingsRepository bookingsRepository) { _dbContext = dbContext; BookingsRepository = bookingsRepository; } public IBookingsRepository BookingsRepository { get; } public async Task CommitAsync(CancellationToken cancellationToken = default) { await _dbContext.SaveChangesAsync(cancellationToken); } }
 ```
 

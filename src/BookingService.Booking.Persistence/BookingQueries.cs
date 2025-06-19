@@ -16,7 +16,7 @@ internal class BookingQueries : IBookingsQueries
         _context = context;
     }
 
-    public async Task<BookingData[]> GetByFilter(GetBookingsByFilterQuery getBookingsByFilter)
+    public async Task<BookingData[]> GetByFilter(GetBookingsByFilterQuery getBookingsByFilter, CancellationToken cancellationToken)
     {
         var bookingsQuery = _context.Bookings.AsQueryable();
 
@@ -48,12 +48,12 @@ internal class BookingQueries : IBookingsQueries
             bookingsQuery = bookingsQuery
                 .Where(x => x.CreationBooking == getBookingsByFilter.CreationBooking.Value);
 
-        return await bookingsQuery.Select(x => x.ToBookingData()).ToArrayAsync();
+        return await bookingsQuery.Select(x => x.ToBookingData()).ToArrayAsync(cancellationToken);
     }
 
-    public async Task<string> GetStatusById(long id)
+    public async Task<string> GetStatusById(long id, CancellationToken cancellationToken)
     {
-        var booking = await _context.FindAsync<BookingAggregate>(id);
+        var booking = await _context.FindAsync<BookingAggregate>(id, cancellationToken);
         return booking.Status.ToString();
     }
 }
