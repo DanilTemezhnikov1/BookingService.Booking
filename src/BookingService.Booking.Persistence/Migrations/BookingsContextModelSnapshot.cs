@@ -31,10 +31,6 @@ namespace BookingService.Booking.Persistence.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
-                    b.Property<Guid?>("CatalogRequestId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("catalog_request_id");
-
                     b.Property<DateTimeOffset>("CreationBooking")
                         .HasColumnType("timestamptz")
                         .HasColumnName("created_at_date_time");
