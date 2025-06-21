@@ -1,14 +1,6 @@
 ﻿using BookingService.Booking.AppServices.Bookings.Jobs;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace BookingService.Booking.Persistence
+namespace BookingService.Booking.Host
 {
     public class BookingsBackgroundService : BackgroundService
     {
@@ -31,7 +23,7 @@ namespace BookingService.Booking.Persistence
                     await backgroundServiceHandler.Handle(stoppingToken);
                     await Task.Delay(TimeSpan.FromSeconds(5), stoppingToken);
                 }
-                catch 
+                catch
                 {
                     _logger.LogError("Не удалось получить экземляр сервиса");
                 };

@@ -1,17 +1,11 @@
 ﻿using BookingService.Booking.AppServices.Bookings.Jobs;
 using BookingService.Booking.AppServices.Exceptions;
 using BookingService.Booking.Domain.Bookings;
-using BookingService.Booking.Domain.Contracts.Bookings;
 using BookingService.Catalog.Api.Contracts.BookingJobs;
 using BookingService.Catalog.Api.Contracts.BookingJobs.Queries;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace BookingService.Booking.Persistence
+namespace BookingService.Booking.AppServices
 {
     public class BookingsBackgroundServiceHandler : IBookingsBackgroundServiceHandler
     {
