@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BookingService.Booking.Persistence.Migrations
 {
     [DbContext(typeof(BookingsContext))]
-    [Migration("20250612180843_AddCatalogRequestId")]
+    [Migration("20250621174526_AddCatalogRequestId")]
     partial class AddCatalogRequestId
     {
         /// <inheritdoc />

@@ -4,6 +4,7 @@ using BookingService.Booking.Domain.Exceptions;
 using BookingService.Booking.Persistence;
 using Hellang.Middleware.ProblemDetails;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.OpenApi.Models;
 
 namespace BookingService.Booking.Host;
@@ -32,7 +33,7 @@ public class Startup
 
             services.AddAppServices(_configuration);
             services.AddPersistence(_configuration.GetConnectionString("BookingsContext"));
-            //services.AddAppServices();
+            services.AddAppServices();
 
         services.AddProblemDetails(options =>
         {

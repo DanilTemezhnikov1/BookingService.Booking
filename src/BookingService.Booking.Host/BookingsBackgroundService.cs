@@ -5,8 +5,8 @@ namespace BookingService.Booking.Host
     public class BookingsBackgroundService : BackgroundService
     {
         private IServiceProvider _serviceProvider;
-        private ILogger _logger;
-        public BookingsBackgroundService(IServiceProvider serviceProvider, ILogger logger)
+        private ILogger<BookingsBackgroundService> _logger;
+        public BookingsBackgroundService(IServiceProvider serviceProvider, ILogger<BookingsBackgroundService> logger)
         {
             _serviceProvider = serviceProvider;
             _logger = logger;

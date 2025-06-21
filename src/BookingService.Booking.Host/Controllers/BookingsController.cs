@@ -13,7 +13,7 @@ public class BookingsController : ControllerBase
     private readonly IBookingsQueries _bookingsQueries;
     private readonly IBookingsService _bookingsService;
 
-    public BookingsController(IBookingsService bookingsService, IBookingsQueries bookingsQueries, CancellationToken cancellationToken)
+    public BookingsController(IBookingsService bookingsService, IBookingsQueries bookingsQueries)
     {
         _bookingsService = bookingsService;
         _bookingsQueries = bookingsQueries;
