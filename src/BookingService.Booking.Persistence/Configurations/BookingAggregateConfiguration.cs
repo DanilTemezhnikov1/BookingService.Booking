@@ -11,7 +11,8 @@ public class BookingAggregateConfiguration : IEntityTypeConfiguration<BookingAgg
         builder.ToTable("bookings");
 
 
-        builder.HasKey(x => x.Id);
+        builder.HasKey(x => x.Id)
+            .HasName("pk_bookings");
 
 
         builder.Property(x => x.Id)
