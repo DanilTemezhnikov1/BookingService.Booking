@@ -38,7 +38,7 @@ namespace BookingService.Booking.AppServices
                 switch (jobStatus)
                 {
                     case BookingJobStatus.Confirmed: bookingAggregate.Confirm(); break;
-                    case BookingJobStatus.Cancelled: bookingAggregate.Cancel(); break;
+                    case BookingJobStatus.Denied: bookingAggregate.Cancel(); break;
                    // default: throw new ValidationException("Некорректное состояние");
                 };
                 await _bookingsRepository.Update(bookingAggregate, cancellationToken);
