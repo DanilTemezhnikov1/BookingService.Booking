@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using RestEase;
 using Polly;
+using BookingService.Booking.AppServices.Bookings.Jobs;
 
 namespace BookingService.Booking.AppServices.Bookings
 {
@@ -15,6 +16,7 @@ namespace BookingService.Booking.AppServices.Bookings
         {
             services.AddScoped<IBookingsService, BookingService>();
             services.AddSingleton<ICurrentDateTimeProvider, DefaultCurrentDateTimeProvider>();
+            services.AddScoped<IBookingsBackgroundServiceHandler, BookingsBackgroundServiceHandler>();
 
             services.Configure<BookingCatalogRestOptions>(configuration.GetSection(nameof(BookingCatalogRestOptions))); 
 

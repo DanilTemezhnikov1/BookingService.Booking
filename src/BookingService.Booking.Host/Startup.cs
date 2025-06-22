@@ -23,16 +23,16 @@ public class Startup
         // Регистрация сервисов в DI-контейнере
         services.AddControllers();
 
-            // Добавление Swagger
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Booking Service API", Version = "v1", Description = "API для сервиса бронирования" });
+        // Добавление Swagger
+        services.AddSwaggerGen(c =>
+        {
+            c.SwaggerDoc("v1", new OpenApiInfo { Title = "Booking Service API", Version = "v1", Description = "API для сервиса бронирования" });
 
-            });
+        });
 
-            services.AddAppServices(_configuration);
-            services.AddPersistence(_configuration.GetConnectionString("BookingsContext"));
-            services.AddAppServices();
+        services.AddAppServices(_configuration);
+        services.AddPersistence(_configuration.GetConnectionString("BookingsContext"));
+        services.AddHostedService<BookingsBackgroundService>();
 
         services.AddProblemDetails(options =>
         {
