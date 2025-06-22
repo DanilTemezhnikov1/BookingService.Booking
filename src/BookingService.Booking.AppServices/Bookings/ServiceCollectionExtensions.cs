@@ -1,13 +1,37 @@
 ﻿using BookingService.Booking.AppServices.Dates;
+using BookingService.Booking.AppServices.Options;
+using BookingService.Catalog.Api.Contracts.BookingJobs;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+using RestEase;
+using Polly;
+using BookingService.Booking.AppServices.Bookings.Jobs;
 
-namespace BookingService.Booking.AppServices.Bookings;
-
-public static class ServiceCollectionExtensions
+namespace BookingService.Booking.AppServices.Bookings
 {
-    public static void AddAppServices(this IServiceCollection services)
+    public static class ServiceCollectionExtensions
     {
-        services.AddScoped<IBookingsService, BookingService>();
-        services.AddSingleton<ICurrentDateTimeProvider, DefaultCurrentDateTimeProvider>();
+        public static void AddAppServices(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddScoped<IBookingsService, BookingService>();
+            services.AddSingleton<ICurrentDateTimeProvider, DefaultCurrentDateTimeProvider>();
+            services.AddScoped<IBookingsBackgroundServiceHandler, BookingsBackgroundServiceHandler>();
+
+            services.Configure<BookingCatalogRestOptions>(configuration.GetSection(nameof(BookingCatalogRestOptions))); 
+
+            services.AddHttpClient(nameof(BookingCatalogRestOptions),
+   (ctx, client) =>
+   {
+       var options = ctx.GetRequiredService<IOptions<BookingCatalogRestOptions>>().Value;
+       client.BaseAddress = new Uri(options.BaseAddress);
+       client.Timeout = TimeSpan.FromSeconds(90);
+   }).AddTransientHttpErrorPolicy(builder => builder
+   .WaitAndRetryAsync(4, retryAttempt => 
+   TimeSpan.FromSeconds(Math.Pow(2, retryAttempt))));
+
+            services.AddScoped<IBookingJobsController>(ctx => RestClient.For<IBookingJobsController>(ctx.GetRequiredService<IHttpClientFactory>()
+      .CreateClient(nameof(BookingCatalogRestOptions))));
+        }
     }
 }

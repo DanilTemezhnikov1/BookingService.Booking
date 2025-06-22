@@ -11,12 +11,18 @@ public class BookingAggregateConfiguration : IEntityTypeConfiguration<BookingAgg
         builder.ToTable("bookings");
 
 
-        builder.HasKey(x => x.Id);
+        builder.HasKey(x => x.Id)
+            .HasName("pk_bookings");
 
 
         builder.Property(x => x.Id)
             .HasColumnName("id")
             .HasColumnType("bigint");
+
+
+        builder.Property(x => x.CatalogRequestId)
+           .HasColumnName("catalog_request_id")
+           .HasColumnType("uuid");
 
 
         builder.Property(x => x.Status)

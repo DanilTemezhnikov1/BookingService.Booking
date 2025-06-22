@@ -26,14 +26,13 @@ public class Startup
         // Добавление Swagger
         services.AddSwaggerGen(c =>
         {
-            c.SwaggerDoc("v1",
-                new OpenApiInfo
-                {
-                    Title = "Booking Service API", Version = "v1", Description = "API для сервиса бронирования"
-                });
+            c.SwaggerDoc("v1", new OpenApiInfo { Title = "Booking Service API", Version = "v1", Description = "API для сервиса бронирования" });
+
         });
-        services.AddAppServices();
+
+        services.AddAppServices(_configuration);
         services.AddPersistence(_configuration.GetConnectionString("BookingsContext"));
+        services.AddHostedService<BookingsBackgroundService>();
 
         services.AddProblemDetails(options =>
         {
