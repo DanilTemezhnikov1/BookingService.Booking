@@ -11,13 +11,19 @@ namespace BookingService.Booking.AppServices
     {
         private readonly IBookingsBackgroundQueries _bookingsBackgroundQueries;
         private readonly IBookingJobsController _bookingJobsController;
-        private readonly ILogger<BookingsBackgroundServiceHandler> _logger;
-
-        public BookingsBackgroundServiceHandler(IBookingsBackgroundQueries bookingsBackgroundQueries, IBookingJobsController bookingJobsController, ILogger<BookingsBackgroundServiceHandler> logger)
+        private readonly ILogger<BookingsBackgroundServiceHandler> _logger; 
+        private readonly IBookingsRepository _bookingsRepository;
+        private readonly IUnitOfWork _unitOfWork;
+        public BookingsBackgroundServiceHandler(IBookingsBackgroundQueries bookingsBackgroundQueries, 
+            IBookingJobsController bookingJobsController, 
+            ILogger<BookingsBackgroundServiceHandler> logger, 
+            IUnitOfWork unitOfWork)
         {
             _bookingsBackgroundQueries = bookingsBackgroundQueries;
             _bookingJobsController = bookingJobsController;
             _logger = logger;
+            _bookingsRepository = unitOfWork.BookingsRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task Handle(CancellationToken cancellationToken)
@@ -33,8 +39,10 @@ namespace BookingService.Booking.AppServices
                 {
                     case BookingJobStatus.Confirmed: bookingAggregate.Confirm(); break;
                     case BookingJobStatus.Cancelled: bookingAggregate.Cancel(); break;
-                    default: throw new ValidationException("Некорректное состояние");
+                   // default: throw new ValidationException("Некорректное состояние");
                 };
+                await _bookingsRepository.Update(bookingAggregate, cancellationToken);
+                await _unitOfWork.CommitAsync(cancellationToken);
             }
         }
     }
